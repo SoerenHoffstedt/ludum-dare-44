@@ -13,13 +13,15 @@ namespace LD44.InputModes
 {
     public class SelectionMode : InputMode
     {
+        Tile lastTile = null;
+
         public SelectionMode(GameScene scene) : base(scene)
         {
         }
 
         public override InputPreviewData GetInputPreviewData()
         {
-            return null;   
+            return null;
         }
 
         public override void Select()
@@ -34,12 +36,18 @@ namespace LD44.InputModes
 
         public override void Update(double dt)
         {
-            if (Input.GetLeftMouseUp())
-            {                
-                Tile t = scene.GetMouseOverTile();                
-                scene.MoveShipTo(t);
-            }            
+            Tile t = scene.GetMouseOverTile();
 
+            if(t != null && t.Type != PlanetType.Empty && lastTile != t)
+            {
+                Sounds.Play("click");
+            }
+
+            if (Input.GetLeftMouseUp())
+            {                                
+                scene.MoveShipTo(t);
+            }
+            lastTile = t;
         }
     }
 }

@@ -57,8 +57,9 @@
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\MainMenu.cs" />
     <Compile Include="UI\BattleScreen.cs" />
-    <Compile Include="UI\MouseOverScreen.cs" />
-    <Compile Include="UI\Notifications.cs" />
+    <Compile Include="UI\TutorialBar.cs" />
+    <Compile Include="UI\MouseOverBar.cs" />
+    <Compile Include="UI\NotificationBar.cs" />
     <Compile Include="UI\PlanetScreen.cs" />
     <Compile Include="UI\RandomEventScreen.cs" />
     <Compile Include="UI\ResourceBar.cs" />

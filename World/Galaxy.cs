@@ -23,14 +23,20 @@ namespace LD44.World
         GameScene game;
 
         public Tile[,] tiles;
-        Tile homePlanet;
+        public Tile homePlanet;
         Sprite highlightHomeSprite;
+        Sprite iconShop;
+        Sprite iconBattle;
+        Sprite iconRandom;
 
         public Galaxy(GameScene game)
         {
             this.game = game;
             Generate();
-            highlightHomeSprite = Assets.OtherSprites["shipHighlight"];
+            highlightHomeSprite = Assets.OtherSprites["homeHighlight"];
+            iconShop = Assets.OtherSprites["iconShop"];
+            iconBattle = Assets.OtherSprites["iconBattle"];
+            iconRandom = Assets.OtherSprites["iconRandom"];
         }
 
         private void Generate()
@@ -100,7 +106,7 @@ namespace LD44.World
 
         }
       
-        public void Render(SpriteBatch spriteBatch)
+        public void Render(SpriteBatch spriteBatch, bool drawIcons)
         {
             Sprite coveredSprite = Assets.OtherSprites["coveredTile"];
 
@@ -113,15 +119,28 @@ namespace LD44.World
                     if (t != null)
                     {
                         Point pos = new Point(x, y) * TileSize;
-                        if(t == homePlanet)
-                        {
-                            highlightHomeSprite.Render(spriteBatch, pos + new Point(0, 4));
-                        }
+                        
                         if (!t.IsDiscovered) 
                             coveredSprite.Render(spriteBatch, pos);
                         else if (t.Sprite != null)
                             t.Sprite.Render(spriteBatch, pos);
-                        
+
+                        if (drawIcons)
+                        {
+                            Point p2 = pos - new Point(0, 16);
+                            if (t.Type == PlanetType.RandomEvent)
+                                iconRandom.Render(spriteBatch, p2);
+                            else if (t.Type == PlanetType.EnemyBase)
+                                iconBattle.Render(spriteBatch, p2);
+                            else if (t.Type == PlanetType.Shop)
+                                iconShop.Render(spriteBatch, p2);
+                        }                        
+
+                        if (t == homePlanet)
+                        {
+                            highlightHomeSprite.Render(spriteBatch, pos - new Point(0, 10));
+                        }
+
                     }
                 }
             }

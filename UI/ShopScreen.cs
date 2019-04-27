@@ -5,6 +5,7 @@ using BarelyUI.Styles;
 using LD44.Actors;
 using LD44.Scenes;
 using LD44.World;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace LD44.UI
             
             foreach(Stats stat in s)
             {
-                Button b = new Button(stat.ToString());
+                Button b = new Button(stat.ToString(), new Point(150, 40));
                 Stats innerCopy = stat;
                 b.OnMouseClick = () => HandleClick(innerCopy);
                 buttonLayout.AddChild(b);
@@ -94,6 +95,7 @@ namespace LD44.UI
                 playerShip.ChangeStat(Stats.Fuel, info.FuelToBuy);
                 playerShip.ChangeStat(stat, -1);
                 info.FuelToBuy = 0;
+                Sounds.Play("money");
             } else
             {
                 Sounds.Play("error");

@@ -1,5 +1,5 @@
 <config>
-	<!--> Tested resolutions: 1280x768 (but read tutorial on game page, does not fit screen), 1600x900, 1920x1080. but go crazy on your own risk ;-) </-->
-	<resolution x="1600" y="900" /> 
+	<!--> Tested resolutions: 1280x720 (but read tutorial on game page, does not fit screen), 1600x900, 1920x1080. but go crazy on your own risk ;-) </-->
+	<resolution x="1280" y="720" /> 
 	<fullscreen val="false" />
 </config>

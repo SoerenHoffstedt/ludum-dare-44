@@ -66,7 +66,7 @@ namespace LD44
         {
             var list = def.SelectNodes("definitions/ships/s");
             ShipBlueprints = new Dictionary<string, ShipBlueprint>(list.Count);
-            EnemyShipBlueprints = new ShipBlueprint[list.Count - 1];
+            EnemyShipBlueprints = new ShipBlueprint[list.Count - 2];
             int c = 0;
             for(int i = 0; i < list.Count; ++i)
             {                
@@ -128,7 +128,7 @@ namespace LD44
 
         private static void LoadShipSprites()
         {
-            const int count = 2;
+            const int count = 4;
             ShipSprites = new Sprite[count];
             Point start = new Point(0, 32);
 

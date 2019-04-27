@@ -64,12 +64,16 @@ namespace LD44.Scenes
             }
             inputMode = allInputModes[(int)InputModeType.Selection];
 
-            playerShip = new Ship(Assets.ShipBlueprints["player"], new Point(0, Galaxy.Size.Y / 2));
+            playerShip = new Ship(Assets.ShipBlueprints["player0"], new Point(0, Galaxy.Size.Y / 2));
 
             SetCameraBounds();
             CameraInput.Initialize();
 
             CreateUI();
+
+            mouseOverPlanetSprite = Assets.OtherSprites["mouseOverPlanet"];
+            mouseOverSprite = Assets.OtherSprites["mouseOver"];
+           
         }
 
         public override void Update(double deltaTime)
@@ -102,6 +106,29 @@ namespace LD44.Scenes
                 if (isDragging && !Input.GetRightMousePressed() && !Input.GetMiddleMousePressed())
                     isDragging = false;
                 return;
+            }
+
+            if (Input.GetKeyDown(Keys.Tab))
+            {
+                float time = (camera.position - playerShip.WorldPosition.ToVector2()).Length() / 768f;
+                Tweener.Tween(camera, new { posX = playerShip.WorldPosition.X, posY = playerShip.WorldPosition.Y }, time);                
+            }
+
+            if (Input.GetKeyDown(Keys.LeftShift))
+            {
+                Vector2 targetPos = (map.homePlanet.Coord * Galaxy.TileSize).ToVector2();
+                float time = (camera.position - targetPos).Length() / 768f;
+                Tweener.Tween(camera, new { posX = targetPos.X, posY = targetPos.Y }, time);
+            }
+
+            if (Input.GetKeyDown(Keys.F))
+            {
+                ToggleIcons();
+            }
+
+            if (Input.GetKeyDown(Keys.M))
+            {
+                ToggleMusic();
             }
 
             if (Input.GetKeyDown(Keys.F10))
@@ -172,6 +199,7 @@ namespace LD44.Scenes
                         shopScreen.OpenFor(target);
                         break;
                     case PlanetType.EnemyBase:
+                        battleScreen.OpenFor(target);
                         break;
                     case PlanetType.Home:
                         break;
@@ -184,6 +212,11 @@ namespace LD44.Scenes
             return playerShip.GetFuelCostTo(target);
         }
 
+        public void GameOver()
+        {
+            ((LD44Game)game).ShowGameEndScreen(new GameEndScreenInfo());
+        }
+
         public void LeaveToMenu()
         {
             ((LD44Game)game).ShowMainMenu();
@@ -194,6 +227,10 @@ namespace LD44.Scenes
         public void ToggleIcons()
         {
             showIcons = !showIcons;
+            if (showIcons)
+                resourceBar.iconButton.sprite = Assets.OtherSprites["iconToggleOn"];
+            else
+                resourceBar.iconButton.sprite = Assets.OtherSprites["iconToggleOff"];
         }
 
         float soundVolume = 0.4f;
@@ -204,6 +241,12 @@ namespace LD44.Scenes
                 MediaPlayer.Volume = soundVolume;
             else
                 MediaPlayer.Volume = 0.0f;
+
+
+            if (MediaPlayer.Volume == 0.0f)
+                resourceBar.soundButton.sprite = Assets.OtherSprites["soundOff"];
+            else
+                resourceBar.soundButton.sprite = Assets.OtherSprites["soundOn"];
         }
 
         public void ShowNotification(string text, bool playNotificationSound = true)
@@ -236,16 +279,29 @@ namespace LD44.Scenes
         public Tile GetTile(Point p)
         {
             return map.IsInRange(p) ? map[p] : null;
-        }       
+        }
 
         #endregion
+
+        Sprite mouseOverPlanetSprite;
+        Sprite mouseOverSprite;
+
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, transformMatrix: camera.Transform);
-            map.Render(spriteBatch);
+            map.Render(spriteBatch, showIcons);
             playerShip.Render(spriteBatch);
-            
+
+            Tile t = GetMouseOverTile();
+            if(t != null)
+            {
+                if(t.Type != PlanetType.Empty)                
+                    mouseOverPlanetSprite.Render(spriteBatch, t.Coord * Galaxy.TileSize);
+                else                
+                    mouseOverSprite.Render(spriteBatch, t.Coord * Galaxy.TileSize);                
+            }
+
             Effects.Render(spriteBatch);
 
             spriteBatch.End();
@@ -257,12 +313,14 @@ namespace LD44.Scenes
 
         #region UI
 
-        Notifications notifications;
-        MouseOverScreen mouseOverScreen;
+        NotificationBar notifications;
+        MouseOverBar mouseOverScreen;
         ResourceBar resourceBar;
+        TutorialBar tutorialBar;
 
         ShopScreen shopScreen;
         RandomEventScreen randomEventScreen;
+        BattleScreen battleScreen;
 
         private void CreateUI()
         {
@@ -280,13 +338,19 @@ namespace LD44.Scenes
 
             Style.PushStyle("mouseOver");
             Layout.PushLayout("mouseOver");
-            mouseOverScreen = new MouseOverScreen(this);
+            mouseOverScreen = new MouseOverBar(this);
             Style.PopStyle("mouseOver");
             Layout.PopLayout("mouseOver");
 
+            Style.PushStyle("tutorial");
+            Layout.PushLayout("tutorial");
+            tutorialBar = new TutorialBar(this);
+            Style.PopStyle("tutorial");
+            Layout.PopLayout("tutorial");
+
             Style.PushStyle("notifications");
             Layout.PushLayout("notifications");
-            notifications = new Notifications();
+            notifications = new NotificationBar();
             Style.PopStyle("notifications");
             Layout.PopLayout("notifications");
 
@@ -297,10 +361,12 @@ namespace LD44.Scenes
 
             randomEventScreen = new RandomEventScreen(this, canvas);
 
+            battleScreen = new BattleScreen(this, canvas);
+
             Style.PopStyle("planetScreens");
             Layout.PopLayout("planetScreens");
 
-            canvas.AddChild(resourceBar, mouseOverScreen, notifications, shopScreen, randomEventScreen);
+            canvas.AddChild(resourceBar, mouseOverScreen, notifications, tutorialBar, shopScreen, randomEventScreen, battleScreen);
 
             canvas.FinishCreation();
         }

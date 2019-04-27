@@ -18,9 +18,10 @@ namespace LD44.World
             {
                 default:
                 case PlanetType.Home:
-                case PlanetType.EnemyBase:
                 case PlanetType.Empty:
                     return null;
+                case PlanetType.EnemyBase:
+                    return new RandomBattleInfo(rng);
                 case PlanetType.RandomEvent:
                     return new RandomEventInfo(rng);
                 case PlanetType.Shop:

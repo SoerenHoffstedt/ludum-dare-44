@@ -17,61 +17,183 @@ namespace LD44.UI
     public class BattleScreen : ModalWindow
     {
         RandomBattleInfo info;
+        Ship enemyShip;
+        Ship playerShip;
         GameScene scene;
 
         ShipBox playerBox;
         ShipBox enemyBox;
 
-        Text enemyActionText;
+        Text actionText;
         Button attackButton;
-        Button defendButton;
+        Button counterButton;
         Button fleeButton;
 
         public BattleScreen(GameScene scene, Canvas canvas) : base(Texts.Get("battleScreenTitle"), canvas)
         {
             this.scene = scene;
+            playerShip = scene.GetPlayerShip();
             DeactivateCloseButton();
 
             Style.PushStyle("planetScreenContent");
-            Layout.PushLayout("randomEvent");
-            Size = new Point(500, 500);
+            Layout.PushLayout("randomBattle");
+            Size = new Point(700, 700);
 
 
             VerticalLayout layout = new VerticalLayout();
 
-
-
             HorizontalLayout shipBoxes = new HorizontalLayout();
+            Style.PushStyle("panelSprite");
             playerBox   = new ShipBox("playerShip");
             enemyBox    = new ShipBox("enemyShip");
-            shipBoxes.AddChild(playerBox, enemyBox);
+            Style.PopStyle("panelSprite");
+            shipBoxes.AddChild(playerBox, new Space(80), enemyBox);
 
 
             HorizontalLayout buttons = new HorizontalLayout();
-            attackButton    = new Button("attack");
-            defendButton    = new Button("defend");
-            fleeButton      = new Button("flee");
-            buttons.AddChild(attackButton, defendButton, fleeButton);
+            attackButton    = new Button("attack", new Point(200, 40));
+            counterButton    = new Button("counter", new Point(200, 40));
+            fleeButton      = new Button("flee", new Point(200, 40));
+            attackButton.OnMouseClick = Attack;
+            counterButton.OnMouseClick = Counter;
+            fleeButton.OnMouseClick   = Flee;
+            buttons.AddChild(attackButton, counterButton, fleeButton);
 
-            layout.AddChild(shipBoxes, enemyActionText, buttons);
+            actionText = new Text("enemyAction will  be coming, or your action, or something? more text please to widen it\nasdasdas\nasd\nasd\nasda\nasd");
+            actionText.wrapText = true;
+
+            layout.AddChild(shipBoxes, actionText, buttons);
             SetContentPanel(layout);
             OnClose += () => info = null;
             Close();
 
             Style.PopStyle("planetScreenContent");
-            Layout.PopLayout("randomEvent");
+            Layout.PopLayout("randomBattle");
         }
 
 
         public void OpenFor(Tile target)
         {
+            Open();
+
+            damageTakenPlayer = 0;
+            damageTakenEnemy = 0;
+
             info = (RandomBattleInfo)target.planetInfo;
+            enemyShip = new Ship(info.enemyBlueprint, new Point(0, 0));
+            actionText.SetText("battleStartInfo");
             UpdateTexts();
         }
         
         private void UpdateTexts()
         {
+            playerBox.UpdateText(playerShip);
+            enemyBox.UpdateText(enemyShip);
 
+            if (playerShip.GetStat(Stats.Health) == 0 || enemyShip.GetStat(Stats.Health) == 0)
+                ShowEnd();                        
+            else
+                ShowOnGoing();                        
+        }
+
+        const int BASE_FUEL_GAIN = 2;
+        const int OFFSET_FUEL_GAIN = 5;
+
+        void ShowEnd()
+        {
+            if (enemyShip.GetStat(Stats.Health) == 0)
+            {
+                Sounds.Play("success");
+                int fuelGained = (int)(BASE_FUEL_GAIN + new Random().NextDouble() * OFFSET_FUEL_GAIN);
+                playerShip.ChangeStat(Stats.Fuel, fuelGained);
+                actionText.SetText($"Nice, you won the battle. You gained {fuelGained} fuel units.");
+                attackButton.ChangeText("close");
+                attackButton.OnMouseClick = Close;
+            }
+            else
+            {
+                Sounds.Play("gameOver");
+                actionText.SetText("battleLost");
+                attackButton.ChangeText("gameOver");
+                attackButton.OnMouseClick = scene.GameOver;
+            }
+
+            
+            
+            
+            counterButton.Close();
+            fleeButton.Close();
+
+        }
+
+        void ShowOnGoing()
+        {
+            attackButton.ChangeText("attack");
+            counterButton.ChangeText("counter");
+            fleeButton.ChangeText("flee");
+            attackButton.OnMouseClick = Attack;
+            counterButton.OnMouseClick = Counter;
+            fleeButton.OnMouseClick = Flee;
+            attackButton.Open();
+            counterButton.Open();
+            fleeButton.Open();
+
+            if(damageTakenPlayer != 0 || damageTakenEnemy != 0)
+            {
+                actionText.SetText($"You took {damageTakenPlayer} damage.\nThe enemy took {damageTakenEnemy} damage.");
+            }
+                
+        }
+
+        void Attack()
+        {
+            Attacking(playerShip, enemyShip);
+            Attacking(enemyShip, playerShip);
+            UpdateTexts();
+        }
+
+        const int COUNTER_BONUS = 2;
+
+        void Counter()
+        {
+            Attacking(enemyShip, playerShip);
+            Attacking(playerShip, enemyShip, COUNTER_BONUS);
+            UpdateTexts();
+        }
+
+        int damageTakenPlayer = 0;
+        int damageTakenEnemy = 0;
+
+        void Attacking(Ship attacker, Ship attacked, int attackBonus = 0)
+        {
+            int damage = attacker.GetStat(Stats.Damage) - attacked.GetStat(Stats.Defense) + attackBonus;
+            attacked.ChangeStat(Stats.Health,-damage);
+            Sounds.Play("attack");
+            if (attacked.Faction == ShipFaction.Enemy)
+                damageTakenEnemy = damage;
+            else
+                damageTakenPlayer = damage;
+        }
+
+        void Flee()
+        {
+            float threshhold = 0.25f + playerShip.GetStat(Stats.Speed) * 0.1f;
+            bool success = new Random().NextDouble() >= threshhold;
+            if (success)
+            {
+                actionText.SetText("fleeSuccessful");
+                Sounds.Play("success");
+                attackButton.ChangeText("close");
+                attackButton.OnMouseClick = Close;
+                counterButton.Close();
+                fleeButton.Close();
+            }
+            else
+            {
+                Sounds.Play("fail");
+                Attacking(enemyShip, playerShip);    
+                actionText.SetText(Texts.Get("fleeFailed") + $" You took {damageTakenPlayer} damage.");
+            }
         }
 
     }
@@ -89,17 +211,19 @@ namespace LD44.UI
         public ShipBox(string title)
         {
             this.title = new Text(title);
+            this.title.color = Color.CadetBlue;
             shipName    = new Text("this is a ships name");
+            shipName.color = Color.IndianRed;
             healthText  = new KeyValueText("hp", "12");
             damageText  = new KeyValueText("damage", "12");
             defenseText = new KeyValueText("defense", "12");
             speedText   = new KeyValueText("speed", "12");
-            AddChild(this.title, shipName, damageText, defenseText, speedText);
+            AddChild(this.title, new Space(5), shipName, healthText, damageText, defenseText, speedText);
 
         }
 
-        void UpdateText(Ship ship) {
-            shipName.SetText(ship.name);
+        public void UpdateText(Ship ship) {
+            shipName.SetText(ship.Name);
             healthText.SetValue(ship.GetStat(Stats.Health).ToString());
             damageText.SetValue(ship.GetStat(Stats.Damage).ToString());
             defenseText.SetValue(ship.GetStat(Stats.Defense).ToString());

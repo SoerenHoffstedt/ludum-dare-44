@@ -25,7 +25,7 @@ namespace LD44.Actors
         public Point TilePosition { get { return new Point(WorldPosition.X / Galaxy.Size.X, WorldPosition.Y / Galaxy.Size.Y); } }
         public Point WorldPosition;
         public Point Size = new Point(16, 16);
-        public string name;
+        public string Name;
         private int[] stats;
         public ShipState State { get; private set; }
         public Sprite Sprite;
@@ -36,6 +36,7 @@ namespace LD44.Actors
 
         public Ship(ShipBlueprint blueprint, Point startCoord)
         {
+            Name = blueprint.Name;
             Faction = blueprint.Faction;
 
             stats = new int[(int)Stats.Count];
@@ -69,6 +70,8 @@ namespace LD44.Actors
         public void ChangeStat(Stats s, int change)
         {
             stats[(int)s] += change;
+            if (stats[(int)s] < 0)
+                stats[(int)s] = 0;
         }
 
         public int GetFuelCostTo(Point targetCoord)
@@ -141,7 +144,7 @@ namespace LD44.Actors
         {
             Id = node.Attributes["id"].Value;
             Name = node.Attributes["name"].Value;
-            Faction = (ShipFaction)Enum.Parse(typeof(ShipFaction), node.Attributes["sprite"].Value);
+            Faction = (ShipFaction)Enum.Parse(typeof(ShipFaction), node.Attributes["faction"].Value);
             SpriteId = int.Parse(node.Attributes["sprite"].Value);
 
             XmlNode statNode = node.SelectSingleNode("stats");

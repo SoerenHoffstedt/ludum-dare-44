@@ -36,9 +36,9 @@ namespace LD44.Scenes
             VerticalLayout vert = new VerticalLayout();
 
             Text lose       = new Text("loseMsg");
-            Text days       = new Text($"You survived {info.daysLived} days.");
+            /*Text days       = new Text($"You survived {info.daysLived} days.");
             Text sacrifices = new Text($"You sacrificed {info.sacrificedCount} Head Spinners.");
-            Text deaths     = new Text($"You let {info.starvedCount} Head Spinners starve.");
+            Text deaths     = new Text($"You let {info.starvedCount} Head Spinners starve.");*/
 
             Layout.PushLayout("endScreenButtons");
             HorizontalLayout bttns = new HorizontalLayout();
@@ -57,7 +57,7 @@ namespace LD44.Scenes
 
             Text thanks = new Text("thanks");
 
-            vert.AddChild(new UIElement[] { lose, days, sacrifices, deaths, bttns, thanks });
+            vert.AddChild(new UIElement[] { lose, bttns, thanks });
 
 
 
@@ -95,17 +95,10 @@ namespace LD44.Scenes
 
     public class GameEndScreenInfo
     {
-        public int daysLived;
-        public int sacrificedCount;
-        public int starvedCount;
-        public int bornCount;
-
-        public GameEndScreenInfo(int days, int sacrifices, int starved, int born)
+        
+        public GameEndScreenInfo()
         {
-            daysLived = days;
-            sacrificedCount = sacrifices;
-            starvedCount = starved;
-            bornCount = born;
+            
         }
 
     }

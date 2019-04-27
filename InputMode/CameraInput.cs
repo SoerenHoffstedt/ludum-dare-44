@@ -15,12 +15,12 @@ namespace LD44.InputModes
         private static int zoom = 2;
         private static bool isDragging = false;
 
-        private const int MIN_ZOOM = 0;
-        private const int MAX_ZOOM = 6;        
+        private const int MIN_ZOOM = 1;
+        private const int MAX_ZOOM = 4;        
 
         public static void Initialize()
         {
-            zoom = 4;
+            zoom = 3;
         }
 
         public static void HandleCameraInput(Camera camera, double deltaTime, bool uiHandledInput)
@@ -114,6 +114,7 @@ namespace LD44.InputModes
 
         private static float GetZoomFloat()
         {
+            return zoom;
             if (zoom == 0)
                 return 0.25f;
             else if (zoom == 1)
