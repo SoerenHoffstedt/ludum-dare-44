@@ -47,13 +47,22 @@
 		<textFont id="textLargest"/>
 	</style>
 
+	<style id="mouseOver">
+		<panelHasSprite val="true"/>
+	</style>
+
 	<style id="resourceBar">
 		<panelHasSprite val="true"/>
 	</style>
 
-	<style id="selectionPanel">
+	<style id="planetScreens">
 		<panelHasSprite val="true"/>
 	</style>
+	
+	<style id="planetScreenContent">
+		<panelHasSprite val="false"/>
+	</style>
+
 
 	<style id="mouseOverPanel">
 		<panelHasSprite				val="true"/>		

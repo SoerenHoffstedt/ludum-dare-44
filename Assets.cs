@@ -1,10 +1,12 @@
 ﻿using Barely.Util;
+using LD44.Actors;
 using LD44.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,13 @@ namespace LD44
         public static Sprite[] ShipSprites;
         public static Sprite[] BackgroundSprites;
         public static Dictionary<string, Sprite> OtherSprites;
-        
+
+        public static Dictionary<string, ShipBlueprint> ShipBlueprints;
+        public static ShipBlueprint[] EnemyShipBlueprints;
+        public static RandomEvent[] RandomEvents;
+
+        public static List<string> PlanetNames;
+
         private static ContentManager Content;
 
         public static void Load(ContentManager Content)
@@ -38,7 +46,44 @@ namespace LD44
             LoadPlanetSprites();
             LoadBackgroundSprites();
             LoadShipSprites();
-        }     
+            LoadPlanetNames();
+
+            LoadShipBlueprints(def);
+            LoadRandomEvents(def);
+        }
+
+        private static void LoadRandomEvents(XmlDocument def)
+        {
+            var list = def.SelectNodes("definitions/randomEvents/e");
+            RandomEvents = new RandomEvent[list.Count];
+            for (int i = 0; i < list.Count; i++)
+            {
+                RandomEvents[i] = new RandomEvent(list[i]);
+            }
+        }
+
+        private static void LoadShipBlueprints(XmlDocument def)
+        {
+            var list = def.SelectNodes("definitions/ships/s");
+            ShipBlueprints = new Dictionary<string, ShipBlueprint>(list.Count);
+            EnemyShipBlueprints = new ShipBlueprint[list.Count - 1];
+            int c = 0;
+            for(int i = 0; i < list.Count; ++i)
+            {                
+                var blueprint = new ShipBlueprint(list[i]);
+                ShipBlueprints.Add(blueprint.Id, blueprint);
+                if (!blueprint.Id.StartsWith("player"))
+                {
+                    EnemyShipBlueprints[c] = blueprint;
+                    ++c;
+                }
+            }
+        }
+
+        private static void LoadPlanetNames()
+        {
+            PlanetNames = File.ReadAllLines("Content/planet_names.txt").ToList();
+        }
 
         private static void LoadSprites(XmlDocument def)
         {            
@@ -105,6 +150,15 @@ namespace LD44
             return PlanetSprites[random.Next(PlanetSprites.Length)];
         }
 
+        public static RandomEvent GetRandomEvent(Random rng)
+        {
+            return RandomEvents[rng.Next(RandomEvents.Length)];
+        }
+
+        public static ShipBlueprint GetRandomEnemyShip(Random rng)
+        {
+            return EnemyShipBlueprints[rng.Next(EnemyShipBlueprints.Length)];
+        }
 
     }
 }

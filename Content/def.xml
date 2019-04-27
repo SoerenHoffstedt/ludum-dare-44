@@ -1,10 +1,3 @@
-<!--->
-Auto Tile Neighbour Tile Index:
-Up : 1
-Right : 2
-Down : 4
-Left : 8
- </-->
 
  <definitions>
 
@@ -14,10 +7,47 @@ Left : 8
  			
  			<s name="planetSelect" 		x="0" y="16" w="16" h="16" texture="graphics"/>
  			<s name="homePlanet" 		x="16" y="16" w="16" h="16" texture="graphics"/>
+ 			<s name="shipHighlight" texture="graphics">
+ 				<frame x="0" y="48" w="16" h="16" length="125"/>
+ 				<frame x="16" y="48" w="16" h="16" length="150"/>
+ 				<frame x="32" y="48" w="16" h="16" length="200"/>
+ 				<frame x="16" y="48" w="16" h="16" length="150"/>
+ 				<frame x="0" y="48" w="16" h="16" length="125"/>
+ 			</s>
 			<s name="coveredTile" 		x="128" y="16" w="16" h="16" texture="graphics"/>
+
+			<s name="fuelIcon" 			x="0" y="144" w="32" h="32" texture="ui_atlas"/>
+			<s name="defenseIcon" 		x="32" y="144" w="32" h="32" texture="ui_atlas"/>
+			<s name="speedIcon" 		x="64" y="144" w="32" h="32" texture="ui_atlas"/>
+			<s name="damageIcon" 		x="96" y="144" w="32" h="32" texture="ui_atlas"/>
+			<s name="scanningIcon" 		x="128" y="144" w="32" h="32" texture="ui_atlas"/>
+			<s name="healthIcon" 		x="160" y="144" w="32" h="32" texture="ui_atlas"/>
+
+			<s name="menuIcon" 			x="192" y="32" w="32" h="32" texture="ui_atlas"/>
+			<s name="iconToggleOn"		x="224" y="32" w="32" h="32" texture="ui_atlas"/>
+			<s name="iconToggleOff"		x="224" y="64" w="32" h="32" texture="ui_atlas"/>
+			<s name="soundOn" 			x="192" y="0" w="32" h="32" texture="ui_atlas"/>
+			<s name="soundOff" 			x="224" y="0" w="32" h="32" texture="ui_atlas"/>
+
 
  		</sprites>
 
  	</graphics>
 
+ 	<ships>
+ 		<s id="player" name="Horse Ship" faction="Player" sprite="0">
+ 			<stats Health="10" Speed="5" Damage="5" Defense="5" Fuel="30" />
+ 		</s>
+ 	</ships>
+
+ 	<randomEvents>
+ 		
+		<e id="dog" text="A small dog approaches you as your ship lands. It sits down two meters in front of you and observes you thoroughly. What are you doing?" choices="2">
+			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel." stat="Fuel" amount="10"/>
+			<choice text="Ignore the dog" result="Why are you doing this?" />
+		</e>
+
+ 	</randomEvents>
+
  </definitions>
+

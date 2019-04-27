@@ -14,6 +14,8 @@ using Microsoft.Xna.Framework.Media;
 using LD44.World;
 using LD44.UI;
 using LD44.InputModes;
+using LD44.Actors;
+using static LD44.Actors.Ship;
 
 namespace LD44.Scenes
 {
@@ -27,7 +29,10 @@ namespace LD44.Scenes
         public static Tweener Tweener = new Tweener();
         public static Tweener UITweener = new Tweener();
 
-        private Galaxy map;            
+        private Galaxy map;
+        Ship playerShip;
+        List<Ship> enemyShip;
+
         private State state = State.Normal;  
         Point mouseOverTile = new Point(-1, -1);
 
@@ -40,8 +45,7 @@ namespace LD44.Scenes
         public GameScene(ContentManager Content, GraphicsDevice GraphicsDevice, Game game) 
                 : base(Content, GraphicsDevice, game)
         {
-            
-            CreateUI();
+                        
         }
 
         public override void Initialize()
@@ -54,14 +58,18 @@ namespace LD44.Scenes
                 switch (type)
                 {
                     case InputModeType.Selection:
-                        allInputModes[(int)type] = new SelectionMode(map);
+                        allInputModes[(int)type] = new SelectionMode(this);
                         break;
                 }
             }
             inputMode = allInputModes[(int)InputModeType.Selection];
 
+            playerShip = new Ship(Assets.ShipBlueprints["player"], new Point(0, Galaxy.Size.Y / 2));
+
             SetCameraBounds();
             CameraInput.Initialize();
+
+            CreateUI();
         }
 
         public override void Update(double deltaTime)
@@ -72,30 +80,36 @@ namespace LD44.Scenes
             UITweener.Update(dt);
 
             HandleInput(deltaTime);
-            CameraInput.HandleCameraInput(camera, deltaTime, cameraTakesInput);
-            inputMode.Update(deltaTime);            
+            CameraInput.HandleCameraInput(camera, deltaTime, uiHandledInput);
+            if(!uiHandledInput)
+                inputMode.Update(deltaTime);            
                             
             canvas.Update(dt);            
         }
 
         #region Input
 
-        bool cameraTakesInput = true;
+        bool uiHandledInput = false;
         bool hideUI = false;
 
         private void HandleInput(double deltaTime)
         {
-            bool handled = hideUI ? false : canvas.HandleInput();
-            cameraTakesInput = true;
-            if (handled)
-            {
-                cameraTakesInput = false;
+            mouseOverTile = camera.ToWorld(Input.GetMousePosition()) / Galaxy.TileSize;
+
+            uiHandledInput = hideUI ? false : canvas.HandleInput();            
+            if (uiHandledInput)
+            {                
                 if (isDragging && !Input.GetRightMousePressed() && !Input.GetMiddleMousePressed())
                     isDragging = false;
                 return;
-            }            
+            }
 
-            if (Input.GetKeyDown(Keys.F12))
+            if (Input.GetKeyDown(Keys.F10))
+            {
+                playerShip.ChangeStat(Stats.Fuel, 20);
+            }
+
+            if (Input.GetKeyDown(Keys.F11))
             {
                 hideUI = !hideUI;
             }
@@ -115,6 +129,7 @@ namespace LD44.Scenes
         void SetCameraBounds()
         {            
             camera.SetMinMaxPosition(new Vector2(0, 0), Galaxy.Size.ToVector2() * Galaxy.TileSize.ToVector2());
+            camera.SetPosition(new Point(0, Galaxy.Size.Y / 2 * Galaxy.TileSize.Y));
         }
 
         #endregion
@@ -123,9 +138,62 @@ namespace LD44.Scenes
 
         #region Map/Actor API 
 
+        public void MoveShipTo(Tile target)
+        {
+            if (playerShip.State == ShipState.Flying)
+                return;
+            if (target == null)
+            {
+                Sounds.Play("error");
+                return;
+            }
+            if (playerShip.CanFlyTo(target.Coord))
+            {
+                playerShip.FlyTo(target.Coord, () => PlayerReached(target));
+            } else
+            {
+                Sounds.Play("missingFuel");
+                notifications.AddNotification("missingFuel");
+                return;
+            }
+
+        }
+
+        private void PlayerReached(Tile target)
+        {
+            if(target.Type != PlanetType.Empty)
+            {
+                switch (target.Type)
+                {                    
+                    case PlanetType.RandomEvent:
+                        randomEventScreen.OpenFor(target);
+                        break;
+                    case PlanetType.Shop:
+                        shopScreen.OpenFor(target);
+                        break;
+                    case PlanetType.EnemyBase:
+                        break;
+                    case PlanetType.Home:
+                        break;
+                }
+            }
+        }
+
+        public int GetFuelCost(Point target)
+        {
+            return playerShip.GetFuelCostTo(target);
+        }
+
         public void LeaveToMenu()
         {
             ((LD44Game)game).ShowMainMenu();
+        }
+
+        bool showIcons = true;
+
+        public void ToggleIcons()
+        {
+            showIcons = !showIcons;
         }
 
         float soundVolume = 0.4f;
@@ -145,9 +213,24 @@ namespace LD44.Scenes
                 Sounds.Play("notification");
         }
             
-        public Point GetMouseOverTile()
+        public Point GetMouseOverCoordinate()
         {
             return mouseOverTile;
+        }
+
+        public Point GetMousePosition()
+        {
+            return camera.ToWorld(Input.GetMousePosition());
+        }
+
+        public Tile GetMouseOverTile()
+        {
+            return map.IsInRange(mouseOverTile) ? map[mouseOverTile] : null;
+        }
+
+        public Ship GetPlayerShip ()
+        {
+            return playerShip;
         }
 
         public Tile GetTile(Point p)
@@ -161,9 +244,8 @@ namespace LD44.Scenes
         {
             spriteBatch.Begin(samplerState: SamplerState.PointWrap, transformMatrix: camera.Transform);
             map.Render(spriteBatch);
-
-            //...
-
+            playerShip.Render(spriteBatch);
+            
             Effects.Render(spriteBatch);
 
             spriteBatch.End();
@@ -176,6 +258,11 @@ namespace LD44.Scenes
         #region UI
 
         Notifications notifications;
+        MouseOverScreen mouseOverScreen;
+        ResourceBar resourceBar;
+
+        ShopScreen shopScreen;
+        RandomEventScreen randomEventScreen;
 
         private void CreateUI()
         {
@@ -184,8 +271,37 @@ namespace LD44.Scenes
             Style.PushStyle("standard");
             Layout.PushLayout("standard");
 
-            //...           
-            
+
+            Style.PushStyle("resourceBar");
+            Layout.PushLayout("resourceBar");
+            resourceBar = new ResourceBar(this);
+            Style.PopStyle("resourceBar");
+            Layout.PopLayout("resourceBar");
+
+            Style.PushStyle("mouseOver");
+            Layout.PushLayout("mouseOver");
+            mouseOverScreen = new MouseOverScreen(this);
+            Style.PopStyle("mouseOver");
+            Layout.PopLayout("mouseOver");
+
+            Style.PushStyle("notifications");
+            Layout.PushLayout("notifications");
+            notifications = new Notifications();
+            Style.PopStyle("notifications");
+            Layout.PopLayout("notifications");
+
+            Style.PushStyle("planetScreens");
+            Layout.PushLayout("planetScreens");
+
+            shopScreen = new ShopScreen(this, canvas);
+
+            randomEventScreen = new RandomEventScreen(this, canvas);
+
+            Style.PopStyle("planetScreens");
+            Layout.PopLayout("planetScreens");
+
+            canvas.AddChild(resourceBar, mouseOverScreen, notifications, shopScreen, randomEventScreen);
+
             canvas.FinishCreation();
         }
 

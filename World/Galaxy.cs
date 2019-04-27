@@ -1,9 +1,12 @@
 ﻿using Barely.Util;
+using LD44.Actors;
 using LD44.Scenes;
+using LD44.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,24 +18,26 @@ namespace LD44.World
     {
         public static Point TileSize = new Point(16, 16);
         public static Point HalfTileSize { get { return new Point(TileSize.X / 2, TileSize.Y / 2); } }
-        public static Point Size = new Point(32, 16);
+        public static Point Size = new Point(48, 20);
 
         GameScene game;
 
-        public Tile[,] tiles;        
-
+        public Tile[,] tiles;
+        Tile homePlanet;
+        Sprite highlightHomeSprite;
 
         public Galaxy(GameScene game)
         {
             this.game = game;
             Generate();
+            highlightHomeSprite = Assets.OtherSprites["shipHighlight"];
         }
 
         private void Generate()
         {
             Random random = new Random();
 
-            const int PLANET_COUNT = 20;
+            const int PLANET_COUNT = 26;
 
             tiles = new Tile[Size.X, Size.Y];
             for (int x = 0; x < Size.X; x++)
@@ -41,11 +46,14 @@ namespace LD44.World
                 {
                     Sprite sprite = null;
                     if (random.NextDouble() > 0.8f)
-                        sprite = Assets.GetRandomBackgroundSprite(random);
-                    tiles[x, y] = new Tile(PlanetType.Empty, new Point(x, y), sprite, null);
+                        sprite = Assets.GetRandomBackgroundSprite(random);                    
+                    tiles[x, y] = new Tile(PlanetType.Empty, new Point(x, y), sprite, null, random);
                 }
             }
 
+            var planetNames = Assets.PlanetNames;
+            Debug.Assert(planetNames.Count >= PLANET_COUNT);
+            planetNames.Shuffle(random);
 
             Point mostFarPlanet = new Point(-1, -1);
             for(int i = 0; i < PLANET_COUNT; ++i)
@@ -66,13 +74,23 @@ namespace LD44.World
                         mostFarPlanet = p;
                 }
 
-                tiles[p.X, p.Y] = new Tile(PlanetType.RandomEvent, p, Assets.GetRandomPlanetSprite(random), $"Planet {i + 1}");
+                PlanetType type;
+                double rand = random.NextDouble();
+                if (rand < 0.25f)
+                    type = PlanetType.Shop;
+                else if (rand < 0.75f)
+                    type = PlanetType.RandomEvent;
+                else
+                    type = PlanetType.EnemyBase;
+
+                tiles[p.X, p.Y] = new Tile(type, p, Assets.GetRandomPlanetSprite(random), planetNames[i], random);
             }
 
             Tile home = Tile(mostFarPlanet);
             home.Sprite = Assets.OtherSprites["homePlanet"];
             home.Name = "Home";
             home.Type = PlanetType.Home;
+            homePlanet = home;
              
         }
                 
@@ -95,6 +113,10 @@ namespace LD44.World
                     if (t != null)
                     {
                         Point pos = new Point(x, y) * TileSize;
+                        if(t == homePlanet)
+                        {
+                            highlightHomeSprite.Render(spriteBatch, pos + new Point(0, 4));
+                        }
                         if (!t.IsDiscovered) 
                             coveredSprite.Render(spriteBatch, pos);
                         else if (t.Sprite != null)

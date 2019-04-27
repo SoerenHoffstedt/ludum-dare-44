@@ -1,4 +1,5 @@
 ﻿using Barely.Util;
+using LD44.Scenes;
 using LD44.World;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,11 +20,11 @@ namespace LD44.InputModes
 
     public abstract class InputMode
     {
-        protected Galaxy map;        
+        protected GameScene scene;
 
-        public InputMode(Galaxy map)
+        public InputMode(GameScene scene)
         {
-            this.map = map;            
+            this.scene = scene;      
         }
 
         /// <summary>

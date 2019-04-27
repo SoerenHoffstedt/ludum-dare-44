@@ -16,20 +16,20 @@ namespace LD44.InputModes
         private static bool isDragging = false;
 
         private const int MIN_ZOOM = 0;
-        private const int MAX_ZOOM = 5;        
+        private const int MAX_ZOOM = 6;        
 
         public static void Initialize()
         {
-            zoom = 2;
+            zoom = 4;
         }
 
-        public static void HandleCameraInput(Camera camera, double deltaTime, bool cameraTakesInput)
+        public static void HandleCameraInput(Camera camera, double deltaTime, bool uiHandledInput)
         {
             float dt = (float)deltaTime;
 
             Vector2 camMove = new Vector2();
 
-            if (cameraTakesInput)
+            if (!uiHandledInput)
             {
                 int zoomChange = 0;
 
@@ -83,6 +83,9 @@ namespace LD44.InputModes
 
                 if (isDragging)
                     camMove -= Input.GetMousePositionDelta().ToVector2() / camera.zoom;
+            } else
+            {
+                isDragging = false;
             }
 
             camera.Update(deltaTime, camMove);

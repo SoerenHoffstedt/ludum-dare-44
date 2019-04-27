@@ -57,8 +57,8 @@ namespace LD44
 
         protected override void Initialize()
         {
-            //ShowNewGame();
-            ShowMainMenu();
+            ShowNewGame();
+            //ShowMainMenu();
             base.Initialize();
         }
 
@@ -120,7 +120,7 @@ namespace LD44
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(61, 59, 76));
+            GraphicsDevice.Clear(new Color(56, 50, 80));
             double dt = gameTime.ElapsedGameTime.TotalMilliseconds;
             currScene.Draw(spriteBatch);
             base.Draw(gameTime);

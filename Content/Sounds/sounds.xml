@@ -9,16 +9,9 @@
 		<file file="impacts/explode_c"/>
 	</s>
 	-->
-	<s id="birth" file="birth"/>
-	<s id="boom" file="boom"/>
-	<s id="buildingConstructed" file="buildConstructed"/>
-	<s id="click" file="click"/>
-	<s id="death" file="death"/>
-	<s id="newDay" file="newDay"/>
+	<s id="shipMove" file="thrust"/>
+	<s id="openScreen" file="notification"/>
 	<s id="notification" file="notification"/>
-	<s id="notPlaceable" file="notPlaceable"/>
-	<s id="placed" file="placed"/>
-	<s id="resourceGained" file="resourceGained"/>
-	<s id="sacrificed" file="sacrificed"/>
-	<s id="sacrificeIntro" file="sacrificeIntro"/>
+	<s id="clickOutsideModalWindow" file="error"/>
+	
 </sounds>

@@ -85,7 +85,7 @@ namespace LD44.UI
 
         public void AddNotification(string text)
         {
-            for (int i = lines.Length; i > 0; i--)
+            for (int i = lines.Length - 1; i > 0; i--)
             {
                 if(lines[i - 1].text != "")
                 {
@@ -97,6 +97,7 @@ namespace LD44.UI
 
             lines[0].text = Texts.Get(text);
             lines[0].timer = 0f;
+            Sounds.Play("notification");
         }
 
     }

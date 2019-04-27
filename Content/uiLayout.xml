@@ -40,6 +40,27 @@
 	</standard>
 
 
+	<layout id="notifications">
+		<panel>
+			<anchor x="Right" y="Bottom"/>
+			<layoutSize x="FixedSize" y="FixedSize" />			
+			<childAllign x="Left" y="Top"/> 	
+			<margin val="4"/>
+		</panel>
+		<text>			
+			<layoutSize x="MatchParent" y="WrapContent" />		
+		</text>
+	</layout>	
+
+	<layout id="mouseOver">
+		<panel>
+			<anchor x="Left" y="Bottom"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Left" y="Top"/>
+			<margin val="10"/>
+		</panel>
+	</layout>
+
 	<layout id="resourceBar">
 		<panel>
 			<layoutSize x="WrapContent" y="WrapContent" />
@@ -49,13 +70,32 @@
 		</panel>
 	</layout>
 
-	<layout id="selectionPanel">
+	<layout id="planetScreens">
 		<panel>
-			<anchor x="Right" y="Bottom"/>
-			<layoutSize x="WrapContent" y="WrapContent" />			
-			<childAllign x="Left" y="Top"/> 	
-			<margin val="10"/>
-		</panel>
+			<anchor x="Middle" y="Middle"/>
+			<layoutSize x="WrapContent" y="WrapContent" />
+			<margin val="20"/> 				
+		</panel>		
+	</layout>
+
+	<layout id="planetScreenContent">
+		<panel>			
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="WrapContent" y="WrapContent" />
+			<margin val="5"/> 				
+		</panel>		
+	</layout>
+
+	<layout id="randomEvent">
+		<panel>			
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="FixedSize" y="FixedSize" />
+			<margin val="5"/> 				
+		</panel>		
+		<text>
+			<allignment	x="Left" y="Top" />
+			<layoutSize x="FixedSize" y="WrapContent"/>
+		</text>
 	</layout>
 
 	<layout id="buttonPanel">
@@ -87,17 +127,6 @@
 		</text>
 	</layout>	
 
-	<layout id="notifications">
-		<panel>
-			<anchor x="Right" y="Bottom"/>
-			<layoutSize x="FixedSize" y="FixedSize" />			
-			<childAllign x="Left" y="Top"/> 	
-			<margin val="4"/>
-		</panel>
-		<text>			
-			<layoutSize x="MatchParent" y="WrapContent" />		
-		</text>
-	</layout>	
 
 	<layout id="selectSacrificePanel">
 		<panel>

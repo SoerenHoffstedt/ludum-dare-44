@@ -11,7 +11,7 @@ namespace LD44.Actors
         Damage,
         Defense,
         Speed,
-        Scanning,
+        Health,
         Fuel,
         Count
     }
@@ -26,10 +26,13 @@ namespace LD44.Actors
                 default:
                 case Stats.Damage:
                 case Stats.Defense:
+                    return 5;
                 case Stats.Speed:
                     return 5;
+                case Stats.Health:
+                    return 10;
                 case Stats.Fuel:
-                    return 20;
+                    return 30;
             }
         }
 

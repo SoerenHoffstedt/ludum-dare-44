@@ -3,7 +3,7 @@
 	<string id=""></string>
  	</-->
 
- 	<string id="windowTitle">Your Life is Currency - Ludum Dare 44</string>
+ 	<string id="windowTitle">Ludum Dare 44</string>
  	<string id="gameName">Your Life is Currency</string>
  	<string id="start">Start</string>
  	<string id="thanks">Thanks for playing!</string>
@@ -14,6 +14,26 @@
 	
 	<string id="newGame">New Game</string>
 	<string id="mainMenu">Main Menu</string>
+
+	<string id="type">Type</string>
+	<string id="travelCost">Travel Cost</string>
+
+	<string id="randomEvent">Random Event</string>
+
+	<string id="fuelToBuy">Fuel available:</string>
+	<string id="buyWith">Pay with one of:</string>
+
+	<string id="shopScreenTitle">Shop</string>
+
+	<string id="missingFuel">Not enough fuel to move here.</string>
+	
+	<string id="eventAlreadyDone">Nothing else is happening on this planet.</string>
+	
+
+	<string id="attack">Attack</string>
+	<string id="defend">Defend</string>
+	<string id="flee">Flee (50% chance)</string>
+	
 
 </language>
 

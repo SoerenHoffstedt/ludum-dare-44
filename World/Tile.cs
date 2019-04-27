@@ -25,15 +25,16 @@ namespace LD44.World
         public Point Coord;
         public Sprite Sprite;
         public bool IsDiscovered;
+        public PlanetInfo planetInfo;
 
-
-        public Tile(PlanetType type, Point coord, Sprite sprite, string name)
+        public Tile(PlanetType type, Point coord, Sprite sprite, string name, Random rng)
         {
             Type = type;
             Coord = coord;
             Sprite = sprite;
             Name = name;
             IsDiscovered = true; // false;
+            planetInfo = PlanetInfo.CreatePlanetInfo(type, rng);
         }
         
     }

@@ -57,10 +57,16 @@
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\MainMenu.cs" />
     <Compile Include="UI\BattleScreen.cs" />
+    <Compile Include="UI\MouseOverScreen.cs" />
     <Compile Include="UI\Notifications.cs" />
     <Compile Include="UI\PlanetScreen.cs" />
-    <Compile Include="UI\ShipScreen.cs" />
+    <Compile Include="UI\RandomEventScreen.cs" />
+    <Compile Include="UI\ResourceBar.cs" />
+    <Compile Include="UI\ShopScreen.cs" />
+    <Compile Include="Util\Extensions.cs" />
     <Compile Include="World\Galaxy.cs" />
+    <Compile Include="World\PlanetInfo.cs" />
+    <Compile Include="World\RandomEvent.cs" />
     <Compile Include="World\Tile.cs" />
   </ItemGroup>
   <ItemGroup>

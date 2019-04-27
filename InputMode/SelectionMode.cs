@@ -1,4 +1,8 @@
-﻿using LD44.World;
+﻿using Barely.Util;
+using LD44.Actors;
+using LD44.Scenes;
+using LD44.World;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +13,7 @@ namespace LD44.InputModes
 {
     public class SelectionMode : InputMode
     {
-        public SelectionMode(Galaxy map) : base(map)
+        public SelectionMode(GameScene scene) : base(scene)
         {
         }
 
@@ -30,7 +34,12 @@ namespace LD44.InputModes
 
         public override void Update(double dt)
         {
-            
+            if (Input.GetLeftMouseUp())
+            {                
+                Tile t = scene.GetMouseOverTile();                
+                scene.MoveShipTo(t);
+            }            
+
         }
     }
 }
