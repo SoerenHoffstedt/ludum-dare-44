@@ -1,0 +1,148 @@
+<!-- LayoutOverflow: Scrollbar, Overflow, Truncate, ThrowException -->
+<!-- LayoutFill: Nothing, StretchContent, StretchMargin -->
+<!-- LayoutSize/ChildLayoutOverwrite: MatchParent, WrapContent, FixedSize. Or leave out for not overwriting child layout. -->
+<!-- AnchorX, AnchorY -->
+
+
+<layouts>
+
+	<standard>		
+
+		<panel>
+			<padding 					x="10" y="10" />
+			<margin 					val="5"/>
+			<anchor 					x="Left" y="Top" />
+			<layoutSize 				x="FixedSize" y="FixedSize" />
+			<layoutOverflow 			val="ThrowException"/> 		
+			<layoutFill 				val="Nothing"/>
+			<hasChildLayoutOverwrite	val="true" />
+			<childLayoutOverwrite		val="MatchParent" /> 	
+			<childAllign 				x="Middle" y="Top"/> 	
+		</panel>
+
+		<button>
+			<padding 					x="8" y="8" />
+			<layoutSize 				x="WrapContent" y="WrapContent" />
+		</button>
+
+		<keyValueText>
+			<padding 					x="0" y="0" />
+			<layoutSize 				x="WrapContent" y="WrapContent" />
+			<sizeSplit 					key="0.75" value="0.25" />
+		</keyValueText>
+
+		<text>
+			<padding 					x="0" y="0" />
+			<layoutSize 				x="WrapContent" y="WrapContent" />
+			<allignment					x="Left"		y="Middle" />
+		</text>
+
+	</standard>
+
+
+	<layout id="resourceBar">
+		<panel>
+			<layoutSize x="WrapContent" y="WrapContent" />
+			<layoutFill val="StretchMargin" />
+			<childAllign 				x="Middle" y="Middle"/> 	
+			<margin val="10"/>
+		</panel>
+	</layout>
+
+	<layout id="selectionPanel">
+		<panel>
+			<anchor x="Right" y="Bottom"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Left" y="Top"/> 	
+			<margin val="10"/>
+		</panel>
+	</layout>
+
+	<layout id="buttonPanel">
+		<panel>
+			<anchor x="Left" y="Bottom"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Middle" y="Top"/> 	
+			<margin val="10"/>
+			<childLayoutOverwrite val="WrapContent" />
+		</panel>
+		<button>
+			<padding					x="8" y="8" />
+			<layoutSize 				x="FixedSize" y="FixedSize" />
+		</button>
+		<text>
+			<allignment					x="Left"		y="Top" />
+		</text>
+	</layout>	
+
+	<layout id="mouseOverPanel">
+		<panel>
+			<anchor x="Right" y="Top"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Left" y="Top"/> 	
+			<margin val="10"/>
+		</panel>
+		<text>			
+			<allignment					x="Left"		y="Top" />
+		</text>
+	</layout>	
+
+	<layout id="notifications">
+		<panel>
+			<anchor x="Right" y="Bottom"/>
+			<layoutSize x="FixedSize" y="FixedSize" />			
+			<childAllign x="Left" y="Top"/> 	
+			<margin val="4"/>
+		</panel>
+		<text>			
+			<layoutSize x="MatchParent" y="WrapContent" />		
+		</text>
+	</layout>	
+
+	<layout id="selectSacrificePanel">
+		<panel>
+			<anchor x="Middle" y="Top"/>
+			<layoutSize x="FixedSize" y="FixedSize" />			
+			<childAllign x="Middle" y="Middle"/> 				
+		</panel>
+		<text>			
+			<allignment x="Middle" y="Middle" />			
+		</text>
+	</layout>	
+
+	<layout id="endScreen">
+		<panel>
+			<anchor x="Middle" y="Middle"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Middle" y="Middle"/>
+			<margin val="20"/> 				
+		</panel>
+		<text>			
+			<allignment x="Middle" y="Middle" />			
+		</text>
+	</layout>	
+
+	<layout id="endScreenButtons">
+		<panel>
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Middle" y="Middle"/> 				
+		</panel>
+		<button>
+			<padding x="16" y="16" />			
+		</button>		
+	</layout>	
+
+	<layout id="mainMenu">
+		<panel>
+			<anchor x="Middle" y="Middle"/>
+			<layoutSize x="FixedSize" y="FixedSize" />			
+			<childAllign x="Middle" y="Middle"/> 				
+			<margin val="30"/>
+		</panel>
+		<text>			
+			<allignment x="Middle" y="Middle" />			
+		</text>		
+	</layout>	
+
+</layouts>

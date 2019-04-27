@@ -1,0 +1,19 @@
+<language lang="en">
+	<!--> 	
+	<string id=""></string>
+ 	</-->
+
+ 	<string id="windowTitle">Your Life is Currency - Ludum Dare 44</string>
+ 	<string id="gameName">Your Life is Currency</string>
+ 	<string id="start">Start</string>
+ 	<string id="thanks">Thanks for playing!</string>
+ 	<string id="ld">Made in 48 hours for Ludum Dare 44 (April 2019)</string>
+ 	<string id="by">by Sören Hoffstedt @yellow_what.</string>
+	<string id="exit">Quit</string>
+	<string id="howto">How To Play</string>
+	
+	<string id="newGame">New Game</string>
+	<string id="mainMenu">Main Menu</string>
+
+</language>
+
