@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace LD44.UI
 {
     
-
-    public class Notifications : VerticalLayout
+    public class NotificationBar : VerticalLayout
     {
 
         private class Not
@@ -32,7 +31,7 @@ namespace LD44.UI
 
         Not[] lines;
 
-        public Notifications()
+        public NotificationBar()
         {
             lines = new Not[6];
 

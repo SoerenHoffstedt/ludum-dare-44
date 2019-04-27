@@ -61,6 +61,27 @@
 		</panel>
 	</layout>
 
+	<layout id="tutorial">
+		<panel>
+			<anchor x="Right" y="Top"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Left" y="Top"/>
+			<margin val="5"/>
+		</panel>
+	</layout>
+
+	<layout id="tutorialKeys">
+		<panel>
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Left" y="Top"/>
+			<margin val="10"/>
+		</panel>
+		<text>
+			<allignment	x="Right" y="Middle" />
+		</text>
+	</layout>
+
 	<layout id="resourceBar">
 		<panel>
 			<layoutSize x="WrapContent" y="WrapContent" />
@@ -97,6 +118,21 @@
 			<layoutSize x="FixedSize" y="WrapContent"/>
 		</text>
 	</layout>
+
+	<layout id="randomBattle">
+		<panel>			
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="FixedSize" y="FixedSize" />
+			<margin val="5"/> 				
+		</panel>		
+		<text>
+			<allignment	x="Left" y="Top" />
+			<layoutSize x="FixedSize" y="WrapContent"/>
+		</text>		
+	</layout>
+
+
+
 
 	<layout id="buttonPanel">
 		<panel>

@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 
 namespace LD44.UI
 {
-    public class MouseOverScreen : VerticalLayout
+    public class MouseOverBar : VerticalLayout
     {
         GameScene gameScene;
 
@@ -21,7 +21,7 @@ namespace LD44.UI
         KeyValueText fuelCost;
 
 
-        public MouseOverScreen(GameScene gameScene) : base()
+        public MouseOverBar(GameScene gameScene) : base()
         {
             this.gameScene = gameScene;
 
@@ -33,6 +33,7 @@ namespace LD44.UI
             fuelCost = new KeyValueText("travelCost", "1234");
 
             AddChild(name, type, fuelCost);
+            SetTexts(null);
         }
 
         public override void Update(float deltaTime)
@@ -41,15 +42,10 @@ namespace LD44.UI
 
             Tile t = gameScene.GetMouseOverTile();        
 
-            if (t == null || t.Type == PlanetType.Empty)
-            {                
-                CloseAllChildren();                
-            }
-            else if(t != lastTile)
-            {                
-                OpenAllChildren();
+            if(t != lastTile)
+            {                                
                 SetTexts(t);
-            } else if(t == lastTile)
+            } else if(t != null && t == lastTile)
             {
                 fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
             }
@@ -58,27 +54,38 @@ namespace LD44.UI
 
         private void SetTexts(Tile t)
         {
-            name.SetText(t.Name);
-            type.SetValue(t.Type.ToString());
-            fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
+            if (t == null)
+                CloseAllChildren();
+            else if (t.Type != PlanetType.Empty)
+            {
+                OpenAllChildren();
+                name.SetText(t.Name);
+                type.SetValue(t.Type.ToString());
+                fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
+            } else
+            {
+                name.Close();
+                type.Close();
+                fuelCost.Open();
+                fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
+            }
+            
         }
 
         private void OpenAllChildren()
         {
-            isOpen = true;
-            /*foreach(UIElement e in childElements)
+            foreach(UIElement e in childElements)
             {
                 e.Open();
-            }*/
+            }
         }
 
         private void CloseAllChildren()
         {
-            isOpen = false;
-            /*foreach (UIElement e in childElements)
+            foreach (UIElement e in childElements)
             {
                 e.Close();
-            }*/
+            }
         }
 
     }

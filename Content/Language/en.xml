@@ -9,7 +9,7 @@
  	<string id="thanks">Thanks for playing!</string>
  	<string id="ld">Made in 48 hours for Ludum Dare 44 (April 2019)</string>
  	<string id="by">by Sören Hoffstedt @yellow_what.</string>
-	<string id="exit">Quit</string>
+	<string id="exit">Quit</string>	
 	<string id="howto">How To Play</string>
 	
 	<string id="newGame">New Game</string>
@@ -18,22 +18,49 @@
 	<string id="type">Type</string>
 	<string id="travelCost">Travel Cost</string>
 
+	<string id="Shop">Shop</string>
+	<string id="RandomEvent">Random Event</string>
+	<string id="EnemyBase">Enemy Base (Battle)</string>
+
 	<string id="randomEvent">Random Event</string>
 
 	<string id="fuelToBuy">Fuel available:</string>
 	<string id="buyWith">Pay with one of:</string>
 
 	<string id="shopScreenTitle">Shop</string>
+	<string id="battleScreenTitle">Battle</string>
 
 	<string id="missingFuel">Not enough fuel to move here.</string>
 	
 	<string id="eventAlreadyDone">Nothing else is happening on this planet.</string>
 	
 
+	<string id="playerShip">You:</string>
+	<string id="enemyShip">Enemy:</string>
+
+	<string id="damage">Attack</string>
+	<string id="defense">Defense</string>
+	<string id="speed">Speed</string>
+	<string id="hp">Health Points</string>
 	<string id="attack">Attack</string>
-	<string id="defend">Defend</string>
-	<string id="flee">Flee (50% chance)</string>
+	<string id="counter">Counter</string>
+	<string id="flee">Flee</string>
 	
+	<string id="battleStartInfo">You are battleing a hostile ship. After you attack, the enemy will attack. Countering will let the opponent attack first, giving you the chance for a strong counter attack (+2 damage). The base chance of fleeing is 25%. Each speed point increases your chance of fleeing by 10% chance. Winning a battle rewards you fuel.</string>
+
+	<string id="fleeSuccessful">Your attempt to flee was successful. You gained no resources.</string>
+	<string id="fleeFailed">Your attempt to flee failed. The enemy ship attacked you (no counter attack possible).</string>
+	<string id="close">Close</string>
+
+	<string id="goal">Reach your home
+planet (right)</string>
+
+	<string id="tab">Go to Ship</string>
+	<string id="shift">Go to Home</string>
+	<string id="f">Toggle Icons</string>
+	<string id="wasd">Move Camera</string>
+	<string id="rmouse">Move Camera</string>
+	<string id="lmouse">Move</string>
 
 </language>
 

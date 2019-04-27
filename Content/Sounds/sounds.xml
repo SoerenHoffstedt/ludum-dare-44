@@ -9,9 +9,16 @@
 		<file file="impacts/explode_c"/>
 	</s>
 	-->
+	<s id="click" file="click"/>
 	<s id="shipMove" file="thrust"/>
 	<s id="openScreen" file="notification"/>
 	<s id="notification" file="notification"/>
 	<s id="clickOutsideModalWindow" file="error"/>
+
+	<s id="fail" 	file="error"/>
+	<s id="success" file="success"/>
 	
+	<s id="attack" 	file="attack"/>
+	<s id="money" 	file="money"/>
+
 </sounds>

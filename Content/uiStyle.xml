@@ -36,7 +36,7 @@
 		<titlebarSprite				id="titlebar"/>
 		<titlebarCloseSprite		id="close"/>
 		<titlebarTextColor			id="text"/>
-		<titlebarFont				id="textNormal"/>
+		<titlebarFont				id="textLarge"/>
 
 		<sliderHandle				id="sliderHandle" />
 		<sliderBar					id="sliderBar" />
@@ -51,6 +51,14 @@
 		<panelHasSprite val="true"/>
 	</style>
 
+	<style id="tutorial">
+		<panelHasSprite val="true"/>
+	</style>
+
+	<style id="tutorialKeys">
+		<panelHasSprite val="false"/>
+	</style>
+
 	<style id="resourceBar">
 		<panelHasSprite val="true"/>
 	</style>
@@ -63,6 +71,10 @@
 		<panelHasSprite val="false"/>
 	</style>
 
+
+	<style id="panelSprite">
+		<panelHasSprite				val="true"/>		
+	</style>
 
 	<style id="mouseOverPanel">
 		<panelHasSprite				val="true"/>		

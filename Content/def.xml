@@ -5,8 +5,9 @@
 
  		<sprites>
  			
- 			<s name="planetSelect" 		x="0" y="16" w="16" h="16" texture="graphics"/>
- 			<s name="homePlanet" 		x="16" y="16" w="16" h="16" texture="graphics"/>
+ 			<s name="mouseOverPlanet" 		x="0" y="16" w="16" h="16" texture="graphics"/>
+ 			<s name="mouseOver"		 		x="0" y="80" w="16" h="16" texture="graphics"/>
+ 			<s name="homePlanet" 			x="16" y="16" w="16" h="16" texture="graphics"/>
  			<s name="shipHighlight" texture="graphics">
  				<frame x="0" y="48" w="16" h="16" length="125"/>
  				<frame x="16" y="48" w="16" h="16" length="150"/>
@@ -14,6 +15,14 @@
  				<frame x="16" y="48" w="16" h="16" length="150"/>
  				<frame x="0" y="48" w="16" h="16" length="125"/>
  			</s>
+			<s name="homeHighlight" texture="graphics">
+ 				<frame x="48" y="48" w="16" h="16" length="125"/>
+ 				<frame x="64" y="48" w="16" h="16" length="150"/>
+ 				<frame x="80" y="48" w="16" h="16" length="200"/>
+ 				<frame x="64" y="48" w="16" h="16" length="150"/>
+ 				<frame x="48" y="48" w="16" h="16" length="125"/>
+ 			</s>
+
 			<s name="coveredTile" 		x="128" y="16" w="16" h="16" texture="graphics"/>
 
 			<s name="fuelIcon" 			x="0" y="144" w="32" h="32" texture="ui_atlas"/>
@@ -29,21 +38,41 @@
 			<s name="soundOn" 			x="192" y="0" w="32" h="32" texture="ui_atlas"/>
 			<s name="soundOff" 			x="224" y="0" w="32" h="32" texture="ui_atlas"/>
 
+			<s name="iconShop"			x="0" y="96" w="16" h="16" texture="graphics" />
+			<s name="iconBattle"		x="16" y="96" w="16" h="16" texture="graphics" />
+			<s name="iconRandom"		x="32" y="96" w="16" h="16" texture="graphics" />
+
+			<s name="tab" 				x="0" y="176" w="32" h="32" texture="ui_atlas"/>
+			<s name="shift" 			x="32" y="176" w="32" h="32" texture="ui_atlas"/>
+			<s name="wasd" 				x="64" y="176" w="32" h="32" texture="ui_atlas"/>
+			<s name="lmouse" 			x="96" y="176" w="32" h="32" texture="ui_atlas"/>
+			<s name="rmouse" 			x="128" y="176" w="32" h="32" texture="ui_atlas"/>
+			<s name="f" 			x="160" y="176" w="32" h="32" texture="ui_atlas"/>
+
 
  		</sprites>
 
  	</graphics>
 
  	<ships>
- 		<s id="player" name="Horse Ship" faction="Player" sprite="0">
- 			<stats Health="10" Speed="5" Damage="5" Defense="5" Fuel="30" />
+ 		<s id="player0" name="Horse Ship" faction="Player" sprite="0">
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Fuel="30" />
+ 		</s>
+ 		<s id="player1" name="Horse Ship 2" faction="Player" sprite="1">
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Fuel="30" />
+ 		</s>
+ 		<s id="enemy0" name="Evil Horse Ship" faction="Enemy" sprite="2">
+ 			<stats Health="5" Speed="3" Damage="4" Defense="1" Fuel="30" />
+ 		</s>
+ 		<s id="enemy1" name="Evil Horse Ship 2" faction="Enemy" sprite="3">
+ 			<stats Health="10" Speed="3" Damage="3" Defense="2" Fuel="30" />
  		</s>
  	</ships>
 
  	<randomEvents>
  		
 		<e id="dog" text="A small dog approaches you as your ship lands. It sits down two meters in front of you and observes you thoroughly. What are you doing?" choices="2">
-			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel." stat="Fuel" amount="10"/>
+			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (10 units)." stat="Fuel" amount="10"/>
 			<choice text="Ignore the dog" result="Why are you doing this?" />
 		</e>
 

@@ -30,8 +30,8 @@ namespace LD44.UI
         //Image scanningIcon;
         //Text scanningValue;
 
-        bool soundOn = true;
-        bool iconsOn = true;
+        public Button soundButton;
+        public Button iconButton;
 
         public ResourceBar(GameScene scene) : base()
         {
@@ -60,26 +60,15 @@ namespace LD44.UI
             menuButton.tooltipID = "mainMenu";
             menuButton.OnMouseClick = () => scene.LeaveToMenu();
 
-            Button soundButton = new Button(Assets.OtherSprites["soundOn"]);
+            soundButton = new Button(Assets.OtherSprites["soundOn"]);
             soundButton.tooltipID = "toggleMusic";
             soundButton.OnMouseClick = () => {
-                scene.ToggleMusic();
-                soundOn = !soundOn;
-                if (soundOn)
-                    soundButton.sprite = Assets.OtherSprites["soundOn"];
-                else
-                    soundButton.sprite = Assets.OtherSprites["soundOff"];
+                scene.ToggleMusic();                
             };
 
-            Button iconButton = new Button(Assets.OtherSprites["iconToggleOn"]);
-            iconButton.tooltipID = "toggleIcons";
+            iconButton = new Button(Assets.OtherSprites["iconToggleOn"]);            
             iconButton.OnMouseClick = () => {
-                scene.ToggleIcons();
-                iconsOn = !iconsOn;
-                if (iconsOn)
-                    iconButton.sprite = Assets.OtherSprites["iconToggleOn"];
-                else
-                    iconButton.sprite = Assets.OtherSprites["iconToggleOff"];
+                scene.ToggleIcons();                
             };
 
             AddChild(new UIElement[] { menuButton, soundButton, iconButton, new Space(16), healthIcon, healthCount, fuelIcon, fuelCount, speedIcon, speedValue, damageIcon, damageValue, defenseIcon, defenseValue });
