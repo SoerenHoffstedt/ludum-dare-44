@@ -354,6 +354,7 @@ namespace LD44.Scenes
         RandomEventScreen randomEventScreen;
         BattleScreen battleScreen;
         HelpScreen helpScreen;
+        EndScreen endScreen;
 
         private void CreateUI()
         {
@@ -398,6 +399,7 @@ namespace LD44.Scenes
 
             helpScreen = new HelpScreen(canvas);
 
+            endScreen = new EndScreen(this, canvas);
             Style.PopStyle("planetScreens");
             Layout.PopLayout("planetScreens");
 

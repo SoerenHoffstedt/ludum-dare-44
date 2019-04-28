@@ -35,6 +35,7 @@ namespace LD44.Actors
         private Sprite highlightSprite;
         private float rotation = 0f;
         private SoundEffectInstance moveSoundEffect;
+        private GameStats gameStats;
 
         public Ship(ShipBlueprint blueprint, Point startCoord)
         {
@@ -56,6 +57,9 @@ namespace LD44.Actors
 
             moveSoundEffect = Sounds.Get("shipMove").CreateInstance();
             moveSoundEffect.IsLooped = true;
+
+            if (Faction == ShipFaction.Player)
+                this.gameStats = gameStats;
         }
 
         public void Render(SpriteBatch spriteBatch)
@@ -120,6 +124,11 @@ namespace LD44.Actors
             float dist = DistanceTo(targetCoord);
             int fuelCost = GetFuelCost(dist);
             ChangeStat(Stats.Fuel, -fuelCost);            
+
+            if (gameStats != null) {
+                gameStats.FuelBurned += fuelCost;
+                gameStats.DistanceTraveled += dist;
+            }
 
             State = ShipState.Flying;
             targetCoord *= Galaxy.TileSize;

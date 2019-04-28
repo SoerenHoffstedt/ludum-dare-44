@@ -53,10 +53,11 @@
     <Compile Include="LD44Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scenes\EndScreen.cs" />
     <Compile Include="Scenes\GameScene.cs" />
+    <Compile Include="Scenes\GameStats.cs" />
     <Compile Include="Scenes\MainMenu.cs" />
     <Compile Include="UI\BattleScreen.cs" />
+    <Compile Include="UI\EndScreen.cs" />
     <Compile Include="UI\HelpScreen.cs" />
     <Compile Include="UI\TutorialBar.cs" />
     <Compile Include="UI\MouseOverBar.cs" />

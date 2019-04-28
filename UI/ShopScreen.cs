@@ -16,6 +16,7 @@ namespace LD44.UI
 {
     public class ShopScreen : ModalWindow
     {
+        GameStats gameStats;
         Ship playerShip;
         ShopInfo info;
         KeyValueText fuelToBuy;
@@ -29,6 +30,7 @@ namespace LD44.UI
             Layout.PushLayout("planetScreenContent");            
             
             playerShip = scene.GetPlayerShip();
+            gameStats = scene.gameStats;
 
             VerticalLayout layout = new VerticalLayout();
 
@@ -92,6 +94,7 @@ namespace LD44.UI
         {
             if(playerShip.GetStat(stat) > 0)
             {
+                gameStats.PartsSold += 1;                
                 playerShip.ChangeStat(Stats.Fuel, info.FuelToBuy);
                 playerShip.ChangeStat(stat, -1);
                 info.FuelToBuy = 0;

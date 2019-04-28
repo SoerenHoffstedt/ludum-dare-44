@@ -149,7 +149,7 @@
 
 	<layout id="endScreen">
 		<panel>
-			<anchor x="Middle" y="Middle"/>
+			<anchor x="Left" y="Top"/>
 			<layoutSize x="WrapContent" y="WrapContent" />			
 			<childAllign x="Middle" y="Middle"/>
 			<margin val="20"/> 				

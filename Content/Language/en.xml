@@ -4,7 +4,8 @@
  	</-->
 
  	<string id="windowTitle">Ludum Dare 44</string>
- 	<string id="gameName">Your Life is Currency</string>
+ 	<string id="gameName">Space Struggle</string>
+ 	<string id="subtitle">Fighting for the Dogs</string>
  	<string id="start">Start</string>
  	<string id="thanks">Thanks for playing!</string>
  	<string id="ld">Made in 48 hours for Ludum Dare 44 (April 2019)</string>
@@ -52,19 +53,36 @@
 	<string id="fleeFailed">Your attempt to flee failed. The enemy ship attacked you (no counter attack possible).</string>
 	<string id="close">Close</string>
 
-	<string id="goal">Reach your home
-planet (right)</string>
+	<string id="goal">Reach your home planet</string>
 
 	<string id="tab">Go to Ship</string>
 	<string id="shift">Go to Home</string>
 	<string id="f">Toggle Icons</string>
+	<string id="h">Help</string>
 	<string id="wasd">Move Camera</string>
 	<string id="rmouse">Move Camera</string>
 	<string id="lmouse">Move</string>
 
+	<string id="helpScreenTitle">Let's explain some things</string>	
 
-	<string id="helpScreenTitle">Let's explain some things</string>
-	
+	<string id="endSuccessTitle">You won the game</string>
+	<string id="endSuccessText">You successfully made it home. Your crew is happy and your partner awaits you when arriving in your home port.</string>
+	<string id="endFailTitle">You lost the game</string>
+	<string id="endFailText">You and your crew did not make it home.</string>
+	<string id="endFailTextFuel">You ran out of fuel.</string>
+	<string id="endFailTextBattle">Your ship was destroyed in a battle wit the RPI. No one survived.</string>
 
+	<string id="planetCount">Planets Visited</string>
+	<string id="shopCount">Shops Visited</string>
+	<string id="battleCount">Battles Fought</string>
+	<string id="randomEventCount">Random Events</string>
+
+	<string id="partsSold">Ship Parts Sold</string>
+	<string id="fuelBurned">Fuel Burned</string>
+	<string id="distanceTraveled">Distance Traveled</string>	
+
+	<string id="backToMenu">Back To Main Menu</string>
+
+	<string id="introTitle">Intro</string>	
 
 </language>
