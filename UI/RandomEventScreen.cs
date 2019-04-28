@@ -115,9 +115,13 @@ namespace LD44.UI
             eventText.SetText(c.Result);
             CloseAllButtons();
 
-            if (c.StatChanged != Actors.Stats.Count && c.ChangeAmount > 0)
+            if(c.StatChanged != null && c.ChangeAmount != null)
             {
-                scene.GetPlayerShip().ChangeStat(c.StatChanged, c.ChangeAmount);
+                var ship = scene.GetPlayerShip();
+                for (int i = 0; i < c.StatChanged.Length; ++i)
+                {
+                    ship.ChangeStat(c.StatChanged[i], c.ChangeAmount[i]);
+                }
             }
             else if (c.BattleBlueprintId != null)
             {

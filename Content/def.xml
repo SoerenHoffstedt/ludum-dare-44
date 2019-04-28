@@ -73,9 +73,23 @@
 
  	<randomEvents>
  		
+ 		<!--> in a choice: text is the button text, result is the text displayed explaining the effects of the choice.<!-->
 		<e id="dog" text="A small dog approaches you as your ship lands. It sits down two meters in front of you and observes you thoroughly. What are you doing?" choices="2">
-			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (10 units)." stat="Fuel" amount="10"/>
+			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (10 units).">
+				<gain stat="Fuel" amount="10"/>
+			</choice>
 			<choice text="Ignore the dog" result="Why are you doing this?" />
+		</e>
+
+		<e id="bla" text="You land next to a broken down ship. The crew seems friendly but worn down as you approach them. They are fixing their engine and ask you to trade a part of your Speed engine for some fuel, even though they don't have much." choices="3">
+			<choice text="Agree to the trade" result="The crew gives you five fuel units and thanks you. Their tank looks pretty much empty now and you can see that the crew's worries  didn't really got smaller.">
+				<gain stat="Fuel" amount="5"/>
+				<gain stat="Speed" amount="-1"/>
+			</choice>
+			<choice text="Give Speed parts, don't take the fuel" result="The crew stops you euphorically. It would have been their last fuel.">
+				<gain stat="Speed" amount="-1"/>
+			</choice>
+			<choice text="Not interested" result="Everyone is out for themselves."/>
 		</e>
 
  	</randomEvents>

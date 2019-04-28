@@ -43,20 +43,26 @@ namespace LD44.World
         {
             public string Text;
             public string Result;
-            public Stats StatChanged; 
-            public int ChangeAmount;
+            public Stats[] StatChanged; 
+            public int[] ChangeAmount;
             public string BattleBlueprintId;
 
             public Choice(XmlNode node)
             {
                 Text = node.Attributes["text"].Value;
                 Result = node.Attributes["result"].Value;
-                if (node.Attributes["stat"] != null)
+
+                XmlNodeList gainNodes = node.SelectNodes("gain");
+                if(gainNodes.Count > 0)
                 {
-                    StatChanged     = (Stats)Enum.Parse(typeof(Stats), node.Attributes["stat"].Value);
-                    ChangeAmount    = int.Parse(node.Attributes["amount"].Value);
-                } else                
-                    StatChanged = Stats.Count;
+                    StatChanged  = new Stats[gainNodes.Count];
+                    ChangeAmount = new int[gainNodes.Count];
+                    for (int i = 0; i < gainNodes.Count; i++)
+                    {
+                        StatChanged[i]  = (Stats)Enum.Parse(typeof(Stats), gainNodes[i].Attributes["stat"].Value);
+                        ChangeAmount[i] = int.Parse(gainNodes[i].Attributes["amount"].Value);
+                    }
+                }                
 
                 if (node.Attributes["battle"] != null)
                     BattleBlueprintId = node.Attributes["battle"].Value;
