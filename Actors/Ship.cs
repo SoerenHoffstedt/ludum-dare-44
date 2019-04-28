@@ -31,6 +31,7 @@ namespace LD44.Actors
         public ShipFaction Faction { get; private set; }
         private int[] stats;
 
+        private Sprite thrustSprite;
         private Sprite highlightSprite;
         private float rotation = 0f;
         private SoundEffectInstance moveSoundEffect;
@@ -51,7 +52,8 @@ namespace LD44.Actors
             State = ShipState.Idle;
             Sprite = Assets.ShipSprites[blueprint.SpriteId];
             highlightSprite = Assets.OtherSprites["shipHighlight"];
-            
+            thrustSprite = Assets.OtherSprites["shipThrust"];
+
             moveSoundEffect = Sounds.Get("shipMove").CreateInstance();
             moveSoundEffect.IsLooped = true;
         }
@@ -60,6 +62,9 @@ namespace LD44.Actors
         {
             if(Faction == ShipFaction.Player)
                 highlightSprite.Render(spriteBatch, WorldPosition + new Point(-2, 2));
+
+            if(State == ShipState.Flying)                            
+                spriteBatch.Draw(thrustSprite.atlas, new Rectangle(WorldPosition + thrustSprite.drawOffset + new Point(8,8), thrustSprite.spriteRect.Size), thrustSprite.spriteRect, Sprite.color, rotation, new Vector2(16, 8), SpriteEffects.None, 0f);            
 
             spriteBatch.Draw(Sprite.atlas, new Rectangle(WorldPosition + Sprite.drawOffset + new Point(8,8), Sprite.spriteRect.Size), Sprite.spriteRect, Sprite.color, rotation, new Vector2(8,8), SpriteEffects.None, 0f);
         }
