@@ -38,15 +38,18 @@ namespace LD44.InputModes
         {
             Tile t = scene.GetMouseOverTile();
 
-            if(t != null && t.Type != PlanetType.Empty && lastTile != t)
+            if(scene.state != GameScene.State.EnemyFly)
             {
-                Sounds.Play("click");
-            }
+                if (t != null && t.Type != PlanetType.Empty && lastTile != t)
+                {
+                    Sounds.Play("click");
+                }
 
-            if (Input.GetLeftMouseUp())
-            {                                
-                scene.MoveShipTo(t);
-            }
+                if (Input.GetLeftMouseUp())
+                {
+                    scene.MoveShipTo(t);
+                }
+            }            
             lastTile = t;
         }
     }

@@ -23,7 +23,8 @@ namespace LD44.Scenes
     {
         public enum State
         {
-            Normal
+            Normal,
+            EnemyFly
         }
 
         public static Tweener Tweener = new Tweener();
@@ -31,15 +32,23 @@ namespace LD44.Scenes
 
         private Galaxy map;
         Ship playerShip;
-        List<Ship> enemyShip;
+        List<Ship> enemyShips;
+        const int ENEMY_COUNT = 3;
+        const int ENEMY_MOVE = 10;
+        const int ENEMY_ATTACK_RANGE = 2 * 16;
+        const int ENEMY_ATTACK_RANGE_SQ = ENEMY_ATTACK_RANGE * ENEMY_ATTACK_RANGE;
 
-        private State state = State.Normal;  
+        public State state = State.Normal;  
         Point mouseOverTile = new Point(-1, -1);
 
         Canvas canvas;
         InputMode inputMode;
 
         InputMode[] allInputModes;
+
+        Song song;
+
+        public GameStats gameStats = new GameStats();
 
 
         public GameScene(ContentManager Content, GraphicsDevice GraphicsDevice, Game game) 
@@ -64,7 +73,17 @@ namespace LD44.Scenes
             }
             inputMode = allInputModes[(int)InputModeType.Selection];
 
-            playerShip = new Ship(Assets.ShipBlueprints["player0"], new Point(0, Galaxy.Size.Y / 2));
+            playerShip = new Ship(Assets.ShipBlueprints["player0"], new Point(0, Galaxy.Size.Y / 2), gameStats);
+
+            enemyShips = new List<Ship>(ENEMY_COUNT);
+            Point p = new Point(-15, 5);
+            for(int i = 0; i < ENEMY_COUNT; ++i)
+            {                
+                Ship e = new Ship(Assets.ShipBlueprints[$"enemy{i}"], p, null);
+                enemyShips.Add(e);
+                p.Y += 5;
+            }
+
 
             SetCameraBounds();
             CameraInput.Initialize();
@@ -73,7 +92,10 @@ namespace LD44.Scenes
 
             mouseOverPlanetSprite = Assets.OtherSprites["mouseOverPlanet"];
             mouseOverSprite = Assets.OtherSprites["mouseOver"];
-           
+            song = Content.Load<Song>("Sounds/song");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = soundVolume;
+            MediaPlayer.Play(song);
         }
 
         public override void Update(double deltaTime)
@@ -82,6 +104,8 @@ namespace LD44.Scenes
 
             Tweener.Update(dt);
             UITweener.Update(dt);
+
+            UpdateFlyingEnemies();                       
 
             HandleInput(deltaTime);
             CameraInput.HandleCameraInput(camera, deltaTime, uiHandledInput);
@@ -119,6 +143,11 @@ namespace LD44.Scenes
                 Vector2 targetPos = (map.homePlanet.Coord * Galaxy.TileSize).ToVector2();
                 float time = (camera.position - targetPos).Length() / 768f;
                 Tweener.Tween(camera, new { posX = targetPos.X, posY = targetPos.Y }, time);
+            }
+
+            if (Input.GetKeyDown(Keys.H))
+            {
+                helpScreen.Open();
             }
 
             if (Input.GetKeyDown(Keys.F))
@@ -162,7 +191,6 @@ namespace LD44.Scenes
         #endregion
 
 
-
         #region Map/Actor API 
 
         public void ShowHelp()
@@ -181,7 +209,7 @@ namespace LD44.Scenes
             }
             if (playerShip.CanFlyTo(target.Coord))
             {
-                playerShip.FlyTo(target.Coord, () => PlayerReached(target));
+                playerShip.FlyTo(target.Coord, (time) => PlayerReached(target, time));
             } else
             {
                 Sounds.Play("missingFuel");
@@ -191,29 +219,100 @@ namespace LD44.Scenes
 
         }
 
-        private void PlayerReached(Tile target)
+        private void PlayerReached(Tile target, float time)
         {
             if(target.Type != PlanetType.Empty)
             {
+                gameStats.PlanetsVisited += 1;
                 switch (target.Type)
-                {                    
+                {                                        
                     case PlanetType.RandomEvent:
+                        gameStats.RandomEvents += 1;
                         randomEventScreen.OpenFor(target);
                         break;
                     case PlanetType.Shop:
+                        gameStats.ShopsVisited += 1;
                         shopScreen.OpenFor(target);
                         break;
                     case PlanetType.EnemyBase:
+                        gameStats.BattlesFought += 1;
+                        CloseAnyOtherWindow();
                         battleScreen.OpenFor(target);
                         break;
                     case PlanetType.Home:
+                        Won();
                         break;
                 }
             } else if(playerShip.GetStat(Stats.Fuel) == 0)
             {
-                GameOver();
+                GameOver(false);
             }
 
+            if(time > 0f)
+            {
+                MoveEnemyShips(time);
+            }
+
+        }
+
+        void MoveEnemyShips(float time)
+        {
+            state = State.EnemyFly;
+
+            //camera.SetPosition(enemyShips[enemyShips.Count / 2 + enemyShips.Count % 2].WorldPosition);
+
+            Point targetTween = Point.Zero;
+
+            foreach(Ship e in enemyShips)
+            {
+                float speed = e.GetSpeed();
+                float dist = time * speed;
+
+                targetTween = e.WorldPosition + new Point((int)dist, 0);
+                Point coord = targetTween / Galaxy.TileSize;
+                e.FlyTo(coord, (t) => EnemyReached(null, t));
+            }
+
+            //Tweener.Tween(camera, new { posX = targetTween.X }, time / 2f);
+
+        }
+
+        void EnemyReached(Tile target, float time)
+        {
+            state = State.Normal;
+            foreach (Ship e in enemyShips)
+            {
+                if (e.State == ShipState.Flying)
+                    state = State.EnemyFly;
+            }
+        }
+
+        void UpdateFlyingEnemies()
+        {
+            if (state == State.EnemyFly)
+            {
+                foreach (Ship enemy in enemyShips)
+                {
+                    float distSq = (enemy.WorldPosition - playerShip.WorldPosition).ToVector2().LengthSquared();
+                    if (distSq < ENEMY_ATTACK_RANGE_SQ)
+                    {
+                        state = State.Normal;
+                        CloseAnyOtherWindow();
+                        battleScreen.OpenFor(enemy, (ship) => enemyShips.Remove(ship));
+                        foreach (Ship e in enemyShips)
+                        {
+                            e.StopFly();
+                        }
+                    }
+                }
+            }
+        }
+
+        public void StartBattle(string enemyShipBlueprintId)
+        {
+            var ship = new Ship(Assets.ShipBlueprints[enemyShipBlueprintId], Point.Zero, null);
+            CloseAnyOtherWindow();
+            battleScreen.OpenFor(ship, null);
         }
 
         public int GetFuelCost(Point target)
@@ -241,12 +340,21 @@ namespace LD44.Scenes
 
         public void Won()
         {
-
+            endScreen.Open(new GameEndInfo() {
+                success = true,
+                gameStats = gameStats
+            });
         }
 
-        public void GameOver()
+        public void GameOver(bool lostBattle)
         {
-            ((LD44Game)game).ShowGameEndScreen(new GameEndScreenInfo());
+            endScreen.Open(new GameEndInfo()
+            {
+                success = false,
+                lostBattle = lostBattle,
+                noFuel = !lostBattle,
+                gameStats = gameStats
+            });
         }
 
         public void LeaveToMenu()
@@ -325,6 +433,11 @@ namespace LD44.Scenes
             map.Render(spriteBatch, showIcons);
             playerShip.Render(spriteBatch);
 
+            foreach(Ship s in enemyShips)
+            {
+                s.Render(spriteBatch);
+            }
+
             Tile t = GetMouseOverTile();
             if(t != null)
             {
@@ -344,6 +457,14 @@ namespace LD44.Scenes
         }
 
         #region UI
+
+        void CloseAnyOtherWindow()
+        {
+            shopScreen.Close();
+            randomEventScreen.Close();
+            battleScreen.Close();
+            helpScreen.Close();            
+        }
 
         NotificationBar notifications;
         MouseOverBar mouseOverScreen;

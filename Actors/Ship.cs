@@ -16,8 +16,8 @@ namespace LD44.Actors
     public class Ship
     {
         private const int UNITS_PER_FUEL = 10;
-        private const float BASE_SPEED = 48f;
-        private const float SPEED_ADDED_PER_STAT = 8f;
+        private const float BASE_SPEED = 40f;
+        private const float SPEED_ADDED_PER_STAT = 10f;
 
         public int X { get { return WorldPosition.X; } set { WorldPosition.X = value; } }
         public int Y { get { return WorldPosition.Y; } set { WorldPosition.Y = value; } }
@@ -37,7 +37,7 @@ namespace LD44.Actors
         private SoundEffectInstance moveSoundEffect;
         private GameStats gameStats;
 
-        public Ship(ShipBlueprint blueprint, Point startCoord)
+        public Ship(ShipBlueprint blueprint, Point startCoord, GameStats gameStats)
         {
             Name = blueprint.Name;
             Faction = blueprint.Faction;
@@ -114,30 +114,47 @@ namespace LD44.Actors
         {
             return GetStat(Stats.Fuel) >= GetFuelCostTo(targetCoord);
         }
-
-        public void FlyTo(Point targetCoord, Action OnReached)
+        
+        public void StopFly()
         {
+            GameScene.Tweener.Tween(this, new { X = WorldPosition.X, Y = WorldPosition.Y }, 0f);
+        }
+
+        public void FlyTo(Point targetCoord, Action<float> OnReached)
+        {
+            if (targetCoord * Galaxy.TileSize == WorldPosition)
+            {
+                OnReached(0f);
+                return;
+            }
+
             Vector2 dir = (targetCoord * Galaxy.TileSize - WorldPosition).ToVector2();
             dir.Normalize();            
             float newRotation = (float)Math.Atan2(dir.Y, dir.X);           
 
             float dist = DistanceTo(targetCoord);
             int fuelCost = GetFuelCost(dist);
-            ChangeStat(Stats.Fuel, -fuelCost);            
+            ChangeStat(Stats.Fuel, -fuelCost);
 
             if (gameStats != null) {
                 gameStats.FuelBurned += fuelCost;
                 gameStats.DistanceTraveled += dist;
             }
+            
 
             State = ShipState.Flying;
             targetCoord *= Galaxy.TileSize;
-            float speed = BASE_SPEED + SPEED_ADDED_PER_STAT * GetStat(Stats.Speed);
-            GameScene.Tweener.Tween(this, new { X = targetCoord.X, Y = targetCoord.Y }, dist / speed).OnComplete(FlyFinished).OnComplete(OnReached);
+            float speed = GetSpeed();
+            GameScene.Tweener.Tween(this, new { X = targetCoord.X, Y = targetCoord.Y }, dist / speed).OnComplete(FlyFinished).OnComplete(() => OnReached(dist/speed));
             GameScene.Tweener.Tween(this, new { rotation = newRotation }, dist / speed / 4);
 
             moveSoundEffect.IsLooped = true;
-            moveSoundEffect.Play();           
+            moveSoundEffect.Play();            
+        }        
+
+        public float GetSpeed()
+        {
+            return BASE_SPEED + SPEED_ADDED_PER_STAT * GetStat(Stats.Speed);
         }
 
         private void FlyFinished()

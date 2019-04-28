@@ -16,6 +16,7 @@ namespace LD44.UI
 {
     public class BattleScreen : ModalWindow
     {
+        Action<Ship> OnEnemyDeath;
         RandomBattleInfo info;
         Ship enemyShip;
         Ship playerShip;
@@ -72,6 +73,21 @@ namespace LD44.UI
         }
 
 
+        public void OpenFor(Ship enemy, Action<Ship> OnEnemyDeath) {
+            this.OnEnemyDeath = OnEnemyDeath;
+            Open();
+
+            SetTitleText($"Battle: Attacked by {enemy.Name}");
+
+            damageTakenPlayer = 0;
+            damageTakenEnemy = 0;
+
+            enemyShip = enemy;
+
+            actionText.SetText("battleStartInfo");
+            UpdateTexts();
+        }
+
         public void OpenFor(Tile target)
         {
             Open();
@@ -84,7 +100,7 @@ namespace LD44.UI
             info = (RandomBattleInfo)target.planetInfo;
             if(info.enemyBlueprint != null)
             {
-                enemyShip = new Ship(info.enemyBlueprint, new Point(0, 0));            
+                enemyShip = new Ship(info.enemyBlueprint, new Point(0, 0), null);
                 actionText.SetText("battleStartInfo");
                 UpdateTexts();
             } else
@@ -122,7 +138,10 @@ namespace LD44.UI
                 actionText.SetText($"Nice, you won the battle. You gained {fuelGained} fuel units.");
                 attackButton.ChangeText("close");
                 attackButton.OnMouseClick = Close;
-                info.enemyBlueprint = null;
+                if (OnEnemyDeath != null)
+                    OnEnemyDeath(enemyShip);
+                if(info != null)
+                    info.enemyBlueprint = null;
                 enemyShip = null;
             }
             else
@@ -130,7 +149,7 @@ namespace LD44.UI
                 Sounds.Play("gameOver");
                 actionText.SetText("battleLost");
                 attackButton.ChangeText("gameOver");
-                attackButton.OnMouseClick = scene.GameOver;
+                attackButton.OnMouseClick = () => scene.GameOver(true);
             }
                                     
             counterButton.Close();

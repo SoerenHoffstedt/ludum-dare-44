@@ -66,16 +66,19 @@
 
  	<ships>
  		<s id="player0" name="Horse Ship" faction="Player" sprite="0">
- 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="10" Fuel="30" />
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="5" Fuel="25" />
  		</s>
  		<s id="player1" name="Horse Ship 2" faction="Player" sprite="1">
- 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="5" Fuel="30" />
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="5" Fuel="25" />
  		</s>
  		<s id="enemy0" name="Evil Horse Ship" faction="Enemy" sprite="2">
- 			<stats Health="5" Speed="3" Damage="4" Defense="1" Scanning="5" Fuel="30" />
+ 			<stats Health="4" Speed="3" Damage="5" Defense="1" Scanning="5" Fuel="300" />
  		</s>
  		<s id="enemy1" name="Evil Horse Ship 2" faction="Enemy" sprite="3">
- 			<stats Health="10" Speed="3" Damage="3" Defense="2" Scanning="5" Fuel="30" />
+ 			<stats Health="6" Speed="2" Damage="4" Defense="2" Scanning="5" Fuel="300" />
+ 		</s>
+ 		<s id="enemy2" name="Evil Horse Ship 3" faction="Enemy" sprite="4">
+ 			<stats Health="6" Speed="2" Damage="4" Defense="2" Scanning="5" Fuel="300" />
  		</s>
  	</ships>
 

@@ -77,8 +77,10 @@ namespace LD44
 
         protected override void Update(GameTime gameTime)
         {
+            #if DEBUG
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            #endif
 
             double dt = gameTime.ElapsedGameTime.TotalSeconds;
 

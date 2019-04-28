@@ -128,7 +128,7 @@ namespace LD44
 
         private static void LoadShipSprites()
         {
-            const int count = 4;
+            const int count = 5;
             ShipSprites = new Sprite[count];
             Point start = new Point(0, 32);
 

@@ -117,7 +117,11 @@ namespace LD44.UI
             if (c.soundId != null)
                 Sounds.Play(c.soundId);
 
-            if(c.StatChanged != null && c.ChangeAmount != null)
+            buttons[3].Open();
+            buttons[3].ChangeText("close");
+            buttons[3].OnMouseClick = Close;
+
+            if (c.StatChanged != null && c.ChangeAmount != null)
             {
                 var ship = scene.GetPlayerShip();
                 for (int i = 0; i < c.StatChanged.Length; ++i)
@@ -128,11 +132,9 @@ namespace LD44.UI
             else if (c.BattleBlueprintId != null)
             {
                 //TODO: start battle
+                buttons[3].OnMouseClick += () => scene.StartBattle(c.BattleBlueprintId);
             }
-
-            buttons[3].Open();
-            buttons[3].ChangeText("close");
-            buttons[3].OnMouseClick = Close;
+            
         }
 
     }
