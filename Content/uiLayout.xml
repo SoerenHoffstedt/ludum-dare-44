@@ -76,6 +76,22 @@
 		</text>
 	</layout>
 
+	<layout id="introScreen">
+		<panel>
+			<padding x="20" y="20" />
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="FixedSize" y="FixedSize" />			
+			<childAllign x="Left" y="Top"/>
+			<margin val="20"/> 				
+			<hasChildLayoutOverwrite	val="true" />
+			<childLayoutOverwrite		val="MatchParent" /> 	
+		</panel>
+		<text>			
+			<allignment x="Left" y="Top" />			
+			<layoutSize x="MatchParent" y="WrapContent" />
+		</text>
+	</layout>	
+
 	<layout id="tutorial">
 		<panel>
 			<anchor x="Right" y="Top"/>

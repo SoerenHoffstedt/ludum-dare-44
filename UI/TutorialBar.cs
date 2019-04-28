@@ -23,11 +23,11 @@ namespace LD44.UI
             Padding = new Point(6,6);
             goalText = new Text("goal");
             goalText.SetColor(Color.CadetBlue);
-            goalText.SetFont(Style.fonts["textNormal"]);
-            AddChild(goalText, new Space(10));
+            //goalText.SetFont(Style.fonts["textNormal"]);
+            AddChild(goalText, new Space(5));
 
-            string[] text = { "lmouse", "rmouse", "wasd", "tab", "shift", "f" };
-            string[] sprite = { "lmouse", "rmouse", "wasd", "tab", "shift", "f" };
+            string[] text = { "lmouse", "rmouse", "wasd", "tab", "shift", "f", "h" };
+            string[] sprite = { "lmouse", "rmouse", "wasd", "tab", "shift", "f", "h" };
 
             Layout.PushLayout("tutorialKeys");
             Style.PushStyle("tutorialKeys");

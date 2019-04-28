@@ -56,7 +56,8 @@
 			<s name="wasd" 				x="64" y="176" w="32" h="32" texture="ui_atlas"/>
 			<s name="lmouse" 			x="96" y="176" w="32" h="32" texture="ui_atlas"/>
 			<s name="rmouse" 			x="128" y="176" w="32" h="32" texture="ui_atlas"/>
-			<s name="f" 			x="160" y="176" w="32" h="32" texture="ui_atlas"/>
+			<s name="f" 				x="160" y="176" w="32" h="32" texture="ui_atlas"/>
+			<s name="h" 				x="192" y="176" w="32" h="32" texture="ui_atlas"/>
 
 
  		</sprites>

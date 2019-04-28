@@ -355,6 +355,7 @@ namespace LD44.Scenes
         BattleScreen battleScreen;
         HelpScreen helpScreen;
         EndScreen endScreen;
+        IntroductionScreen introScreen;
 
         private void CreateUI()
         {
@@ -400,14 +401,18 @@ namespace LD44.Scenes
             helpScreen = new HelpScreen(canvas);
 
             endScreen = new EndScreen(this, canvas);
+
+            introScreen = new IntroductionScreen(canvas);
+
             Style.PopStyle("planetScreens");
             Layout.PopLayout("planetScreens");
 
-            canvas.AddChild(resourceBar, mouseOverScreen, notifications, tutorialBar, shopScreen, randomEventScreen, battleScreen, helpScreen);
+            canvas.AddChild(resourceBar, mouseOverScreen, notifications, tutorialBar, shopScreen, randomEventScreen, battleScreen, helpScreen, endScreen, introScreen);
 
             canvas.FinishCreation();
         }
 
         #endregion
     }
+
 }

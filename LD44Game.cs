@@ -89,16 +89,7 @@ namespace LD44
             currScene.Update(dt);
 
             base.Update(gameTime);
-        }
-
-        public void ShowGameEndScreen(GameEndScreenInfo info)
-        {
-            MediaPlayer.Stop();
-            currScene = new EndScreen(Content, GraphicsDevice, this, info);
-            currScene.Initialize();
-            Sounds.Reset();
-            Effects.Reset();
-        }
+        }        
 
         public void ShowNewGame()
         {

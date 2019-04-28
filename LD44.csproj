@@ -59,6 +59,7 @@
     <Compile Include="UI\BattleScreen.cs" />
     <Compile Include="UI\EndScreen.cs" />
     <Compile Include="UI\HelpScreen.cs" />
+    <Compile Include="UI\IntroductionScreen.cs" />
     <Compile Include="UI\TutorialBar.cs" />
     <Compile Include="UI\MouseOverBar.cs" />
     <Compile Include="UI\NotificationBar.cs" />

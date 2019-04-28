@@ -38,18 +38,23 @@ namespace LD44.Scenes
             Text name = new Text("gameName");
             Style.PopStyle("gameName");
 
-            Button newGameNormal = new Button("newGame");
+            Text subtitle = new Text("subtitle");
+
+            Button newGameNormal = new Button("newGame", new Point(200, 40));
+            newGameNormal.SetFixedSize(new Point(200, 40));
             newGameNormal.OnMouseClick = () => g.ShowNewGame();
             
-            Button exit = new Button("exit");
+            Button exit = new Button("exit", new Point(200, 40));
+            exit.SetFixedSize(new Point(200, 40));
             exit.OnMouseClick = () => g.Exit();
 
+            Style.PushStyle("tutText");
             Text ld = new Text("ld");
             Text by = new Text("by");
             Text thanks = new Text("thanks");
-            Text howtoHeadline = new Text("howto");
-                        
-            menu.AddChild(new UIElement[] { name, newGameNormal, exit, ld, by, thanks, new Space(15), howtoHeadline });
+            Style.PopStyle("tutText");
+            
+            menu.AddChild(new UIElement[] { name, subtitle, new Space(5), newGameNormal, exit, ld, by, thanks});
 
             Layout.PopLayout("mainMenu");
             Style.PopStyle("mainMenu");
