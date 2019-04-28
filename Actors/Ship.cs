@@ -26,12 +26,13 @@ namespace LD44.Actors
         public Point WorldPosition;
         public Point Size = new Point(16, 16);
         public string Name;
-        private int[] stats;
         public ShipState State { get; private set; }
         public Sprite Sprite;
-        private Sprite highlightSprite;
         public ShipFaction Faction { get; private set; }
+        private int[] stats;
 
+        private Sprite highlightSprite;
+        private float rotation = 0f;
         private SoundEffectInstance moveSoundEffect;
 
         public Ship(ShipBlueprint blueprint, Point startCoord)
@@ -59,7 +60,8 @@ namespace LD44.Actors
         {
             if(Faction == ShipFaction.Player)
                 highlightSprite.Render(spriteBatch, WorldPosition + new Point(-2, 2));
-            Sprite.Render(spriteBatch, WorldPosition);
+
+            spriteBatch.Draw(Sprite.atlas, new Rectangle(WorldPosition + Sprite.drawOffset + new Point(8,8), Sprite.spriteRect.Size), Sprite.spriteRect, Sprite.color, rotation, new Vector2(8,8), SpriteEffects.None, 0f);
         }
 
         public int GetStat(Stats s)
@@ -106,6 +108,10 @@ namespace LD44.Actors
 
         public void FlyTo(Point targetCoord, Action OnReached)
         {
+            Vector2 dir = (targetCoord * Galaxy.TileSize - WorldPosition).ToVector2();
+            dir.Normalize();            
+            float newRotation = (float)Math.Atan2(dir.Y, dir.X);           
+
             float dist = DistanceTo(targetCoord);
             int fuelCost = GetFuelCost(dist);
             ChangeStat(Stats.Fuel, -fuelCost);            
@@ -114,6 +120,7 @@ namespace LD44.Actors
             targetCoord *= Galaxy.TileSize;
             float speed = BASE_SPEED + SPEED_ADDED_PER_STAT * GetStat(Stats.Speed);
             GameScene.Tweener.Tween(this, new { X = targetCoord.X, Y = targetCoord.Y }, dist / speed).OnComplete(FlyFinished).OnComplete(OnReached);
+            GameScene.Tweener.Tween(this, new { rotation = newRotation }, dist / speed / 4);
 
             moveSoundEffect.IsLooped = true;
             moveSoundEffect.Play();           
