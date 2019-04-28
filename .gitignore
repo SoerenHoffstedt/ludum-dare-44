@@ -3,7 +3,7 @@ GDD.md
 PizzyDeliveryTycoon.txt
 TODO.txt
 *.pyxel
-*.wav
+*.ceol
 Content/Misc/*
 Content/Content.mgcb
 
