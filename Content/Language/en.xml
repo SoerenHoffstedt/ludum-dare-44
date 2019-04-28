@@ -46,7 +46,7 @@
 	<string id="counter">Counter</string>
 	<string id="flee">Flee</string>
 	
-	<string id="battleStartInfo">You are battleing a hostile ship. After you attack, the enemy will attack. Countering will let the opponent attack first, giving you the chance for a strong counter attack (+2 damage). The base chance of fleeing is 25%. Each speed point increases your chance of fleeing by 10% chance. Winning a battle rewards you fuel.</string>
+	<string id="battleStartInfo">You are battleing a hostile ship. After you attack, the enemy will attack. Countering will let the opponent attack first, giving you the chance for a strong counter attack (+2 damage). The damage given is your Attack minus the enemies Defense. The base chance of fleeing is 25%. Each speed point increases your chance of fleeing by 10% chance. Winning a battle rewards you fuel.</string>
 
 	<string id="fleeSuccessful">Your attempt to flee was successful. You gained no resources.</string>
 	<string id="fleeFailed">Your attempt to flee failed. The enemy ship attacked you (no counter attack possible).</string>

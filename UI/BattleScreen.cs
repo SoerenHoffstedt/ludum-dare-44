@@ -76,6 +76,8 @@ namespace LD44.UI
         {
             Open();
 
+            SetTitleText(Texts.Get("battleScreenTitle") + $" on {target.Name}");
+
             damageTakenPlayer = 0;
             damageTakenEnemy = 0;
 
