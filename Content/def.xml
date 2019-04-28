@@ -58,7 +58,7 @@
 
  	<ships>
  		<s id="player0" name="Horse Ship" faction="Player" sprite="0">
- 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="2" Fuel="30" />
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="10" Fuel="30" />
  		</s>
  		<s id="player1" name="Horse Ship 2" faction="Player" sprite="1">
  			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="5" Fuel="30" />
@@ -75,10 +75,10 @@
  		
  		<!--> in a choice: text is the button text, result is the text displayed explaining the effects of the choice.<!-->
 		<e id="dog" text="A small dog approaches you as your ship lands. It sits down two meters in front of you and observes you thoroughly. What are you doing?" choices="2">
-			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (10 units).">
+			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (10 units)." sound="money">
 				<gain stat="Fuel" amount="10"/>
 			</choice>
-			<choice text="Ignore the dog" result="Why are you doing this?" />
+			<choice text="Ignore the dog" result="Why are you doing this?" sound="fail"/>
 		</e>
 
 		<e id="bla" text="You land next to a broken down ship. The crew seems friendly but worn down as you approach them. They are fixing their engine and ask you to trade a part of your Speed engine for some fuel, even though they don't have much." choices="3">

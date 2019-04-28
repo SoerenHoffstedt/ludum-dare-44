@@ -46,11 +46,14 @@ namespace LD44.World
             public Stats[] StatChanged; 
             public int[] ChangeAmount;
             public string BattleBlueprintId;
+            public string soundId;
 
             public Choice(XmlNode node)
             {
                 Text = node.Attributes["text"].Value;
                 Result = node.Attributes["result"].Value;
+                if (node.Attributes["sound"] != null)
+                    soundId = node.Attributes["sound"].Value;
 
                 XmlNodeList gainNodes = node.SelectNodes("gain");
                 if(gainNodes.Count > 0)

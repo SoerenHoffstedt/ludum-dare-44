@@ -114,6 +114,8 @@ namespace LD44.UI
         {
             eventText.SetText(c.Result);
             CloseAllButtons();
+            if (c.soundId != null)
+                Sounds.Play(c.soundId);
 
             if(c.StatChanged != null && c.ChangeAmount != null)
             {
