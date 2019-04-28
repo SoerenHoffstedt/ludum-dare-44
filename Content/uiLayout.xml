@@ -66,7 +66,7 @@
 			<anchor x="Left" y="Top"/>
 			<layoutSize x="FixedSize" y="FixedSize" />			
 			<childAllign x="Left" y="Top"/>
-			<margin val="5"/>
+			<margin val="0"/>
 			<hasChildLayoutOverwrite	val="false" />
 			<childLayoutOverwrite		val="MatchParent" /> 	
 		</panel>		
@@ -74,6 +74,16 @@
 			<layoutSize 				x="MatchParent" y="WrapContent" />
 			<allignment					x="Left"		y="Middle" />
 		</text>
+	</layout>
+
+	<layout id="helpIcons">
+		<panel>
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="WrapContent" y="WrapContent" />			
+			<childAllign x="Left" y="Top"/>
+			<margin val="10"/>			
+		</panel>				
+		<allignment	x="Left" y="Middle" />
 	</layout>
 
 	<layout id="introScreen">

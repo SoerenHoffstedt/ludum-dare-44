@@ -8,3 +8,5 @@
 - Speed determines how fast you travel between planets.
 - The strength of your Scanning system determines how far ahead you can analyze planets.
   For each scanning point you can see four more tiles ahead.
+- Enemy ships are patrolling space. They move after you moved. 
+  They will attack you when they get too near (two tiles).

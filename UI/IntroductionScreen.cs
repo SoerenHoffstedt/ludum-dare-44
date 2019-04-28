@@ -29,7 +29,7 @@ FOR THE DOGGOS!";
             Style.PushStyle("planetScreenContent");
             Layout.PushLayout("introScreen");
             VerticalLayout layout = new VerticalLayout();
-            layout.SetFixedSize(900, 600);            
+            layout.SetFixedSize(700, 450);            
 
             var mainText = new Text(introText);
             mainText.wrapText = true;            
