@@ -65,22 +65,22 @@
  	</graphics>
 
  	<ships>
- 		<s id="player0" name="Horse Ship" faction="Player" sprite="0">
- 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="5" Fuel="25" />
+ 		<s id="player0" name="Rebel Cruiser" faction="Player" sprite="0">
+ 			<stats Health="10" Speed="5" Damage="5" Defense="2" Scanning="3" Fuel="25" />
  		</s>
  		<s id="player1" name="Horse Ship 2" faction="Player" sprite="1">
- 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="5" Fuel="25" />
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="3" Fuel="25" />
  		</s>
- 		<s id="enemy0" name="Evil Horse Ship" faction="Enemy" sprite="2">
+ 		<s id="enemy0" name="DCA Cruiser" faction="Enemy" sprite="2">
  			<stats Health="4" Speed="3" Damage="5" Defense="1" Scanning="5" Fuel="300" />
  		</s>
- 		<s id="enemy1" name="Evil Horse Ship 2" faction="Enemy" sprite="3">
+ 		<s id="enemy1" name="DCA Horse Ship" faction="Enemy" sprite="3">
  			<stats Health="6" Speed="2" Damage="4" Defense="2" Scanning="5" Fuel="300" />
  		</s>
- 		<s id="enemy2" name="Evil Horse Ship 3" faction="Enemy" sprite="4">
+ 		<s id="enemy2" name="DCA Freighter" faction="Enemy" sprite="4">
  			<stats Health="4" Speed="2" Damage="6" Defense="0" Scanning="5" Fuel="300" />
  		</s>
- 		<s id="enemy3" name="Evil Horse Ship 3" faction="Enemy" sprite="5">
+ 		<s id="enemy3" name="DCA Destroyer" faction="Enemy" sprite="5">
  			<stats Health="6" Speed="2" Damage="6" Defense="2" Scanning="5" Fuel="300" />
  		</s>
  	</ships>
@@ -88,22 +88,127 @@
  	<randomEvents>
  		
  		<!--> in a choice: text is the button text, result is the text displayed explaining the effects of the choice.<!-->
-		<e id="dog" text="A small dog approaches you as your ship lands. It sits down two meters in front of you and observes you thoroughly. What are you doing?" choices="2">
-			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (10 units)." sound="money">
-				<gain stat="Fuel" amount="10"/>
+		<e id="dog" text="A small dog approaches you as your ship lands. It sits down two meters in front of you and observes you thoroughly. What are you doing?">
+			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (5 units)." sound="money">
+				<gain stat="Fuel" amount="5"/>
 			</choice>
-			<choice text="Ignore the dog" result="Why are you doing this?" sound="fail"/>
+			<choice text="Ignore the dog" result="What is wrong with you?" sound="fail"/>
 		</e>
 
-		<e id="bla" text="You land next to a broken down ship. The crew seems friendly but worn down as you approach them. They are fixing their engine and ask you to trade a part of your Speed engine for some fuel, even though they don't have much." choices="3">
+		<e id="dog" text="A big dog approaches you as your ship lands. It sits down two meters in front of you and observes you thoroughly. What are you doing?">
+			<choice text="Pet the dog" result="The dog is happy and leads you to a stash of fuel (5 units)." sound="money">
+				<gain stat="Fuel" amount="5"/>
+			</choice>
+			<choice text="Ignore the dog" result="The cute dog gets angry, runs to your ship, and steals a Speed component. Wuff." sound="fail">
+				<gain stat="Speed" amount="-1"/>
+			</choice>
+		</e>
+
+		<e id="empty0" text="You land on an empty planet that shows some signs of life. But you don't see other people or ships.">
+			<choice text="Explore further" result="After two hours of wandering around, you find a cave that contains some cans of fuel (7 units). A lucky day.">
+				<gain stat="Fuel" amount="7"/>
+			</choice>
+			<choice text="Leave" result="The journey continues." />
+		</e>
+
+		<e id="empty1" text="You land on an empty planet that shows some signs of life. But you don't see other people or ships.">
+			<choice text="Explore further" result="After two hours of wandering around, an DCA ship enters the atmosphere of the planet. You rush back to your ship and prepare for a battle." battle="enemy0"/>			
+			<choice text="Leave" result="The journey continues." />
+		</e>
+
+		<e id="trade0" text="You land next to a broken down ship. The crew seems worn down but friendly as you approach them. They are fixing their engine and ask you to trade a part of your Speed engine for some fuel, even though they don't have much.">
 			<choice text="Agree to the trade" result="The crew gives you five fuel units and thanks you. Their tank looks pretty much empty now and you can see that the crew's worries  didn't really got smaller.">
 				<gain stat="Fuel" amount="5"/>
 				<gain stat="Speed" amount="-1"/>
 			</choice>
-			<choice text="Give Speed parts, don't take the fuel" result="The crew stops you euphorically. It would have been their last fuel.">
+			<choice text="Give Speed parts, don't take the fuel" result="The crew thanks you euphorically. It would have been their last fuel.">
 				<gain stat="Speed" amount="-1"/>
 			</choice>
 			<choice text="Not interested" result="Everyone is out for themselves."/>
+		</e>
+
+		<e id="trade1" text="As you land, you receive a distress call of a civil ship near by. You track down their ship. The crew is unarmed and friendly. Their engine is broken and want to trade a Speed part for five fuel.">
+			<choice text="Agree to the trade" result="The crew gives you five fuel units and thanks you.">
+				<gain stat="Fuel" amount="5"/>
+				<gain stat="Speed" amount="-1"/>
+			</choice>
+			<choice text="Rob them" result="The end justifies the means...?">
+				<gain stat="Fuel" amount="5"/>
+			</choice>
+			<choice text="Sorry, can't help" result="Everyone is out for themselves."/>
+		</e>
+
+		<e id="dca1" text="As you explore the planet you find a DCA ship. The crew is not hostile, they probably don't know who you are. They ask to trade a Defense part for fuel.">
+			<choice text="Sure, we can do that trade" result="You give them the Defense part. Back at your ship, you realize that the fuel can they have given you only holds water.">
+				<gain stat="Defense" amount="-1" />				
+			</choice>
+			<choice text="Sorry, we don't have the spare parts." result="You leave while the DCA crew observes you tensely."/>
+			<choice text="We don't trade with DCA scum" result="The DCA crew grabs their weapons immediately and you start running to your ship. The fight will be taken into the air." battle="enemy1"/>
+		</e>
+
+		<e id="dca2" text="As you explore the planet you find a DCA ship. The crew is not hostile, they probably don't know who you are. They ask to trade a Defense part for fuel.">
+			<choice text="Sure, we can do that trade" result="You give them the Defense part and receive the fuel without a problem. Maybe you were lucky.">
+				<gain stat="Defense" amount="-1" />
+				<gain stat="Fuel" amount="5" />
+			</choice>
+			<choice text="Sorry, we don't have the spare parts." result="You leave while the DCA crew observes you tensely."/>
+			<choice text="We don't trade with DCA scum" result="You leave while the DCA crew observes you tensely."/>
+		</e>
+
+		<e id="dca3" text="As you explore the planet, you notice a DCA squad that lies in wait to catch a group of dogs. They don't see you.">
+			<choice text="Try to save the dogs" result="You attack the DCA unit with your ship." battle="enemy2" />
+			<choice text="Leave" result="You can leave unnoticed. The dogs are left to themselves." />
+		</e>
+
+		<e id="dca4" text="You land on an inhabited planet and reach a city. Needing a break, your crew goes into a bar to have some drinks. After a few drinks three massive private security guards come to you. They know that you are wanted by the DCA. Pay them off or they will hand you over to the DCA.">
+			<choice text="Pay them off (Attack)" result="You pay them off with a part of your Attack system.">
+				<gain stat="Damage" amount="-1" />
+			</choice>
+			<choice text="Pay them off (Defense)" result="You pay them off with a part of your Defense system.">
+				<gain stat="Defense" amount="-1" />
+			</choice>
+			<choice text="Pay them off (Speed)" result="You pay them off with a part of your Speed system.">
+				<gain stat="Speed" amount="-1" />
+			</choice>
+			<choice text="Start a fight" result="You attack the security guards. You can not do much and they send of a call to a local DCA unit. You rush out of the bar to your ship, but you cannot escape a fight with the DCA unit." battle="enemy1"/>
+		</e>
+
+		<e id="dca5" text="You suspect nothing when you land. The planet looks like any other. But as soon as the ship's engine is shut off and you leave the ship, a highly armed unit of the DCA comes out of a nearby forest." >
+			<choice text="Fight them" result="The DCA attacks you with a powerful ship." battle="enemy3"/>
+			<choice text="Try to flee" result="You and your crew run to the ship and try to leave as fast as possible. The DCA unit opens fire. You successfully leave the planet but a shot damages the Speed component of the ship (-1).">
+				<gain stat="Speed" amount="-1"/>
+			</choice>
+		</e>
+
+		<e id="local1" text="You find a small village. A small group of people is gathered on a public place. You ask them for trading opportunities and a trade among them offers five fuel units for a ship part.">
+			<choice text="Trade Damage" result="You trade one Damage part for five fuel units.">
+				<gain stat="Damage" amount="-1"/>
+				<gain stat="Fuel" amount="5"/>
+			</choice>
+			<choice text="Trade Speed" result="You trade one Speed part for five fuel units.">
+				<gain stat="Speed" amount="-1"/>
+				<gain stat="Fuel" amount="5"/>
+			</choice>
+			<choice text="Trade Scanning" result="You trade one Scanning part for five fuel units.">
+				<gain stat="Scanning" amount="-1"/>
+				<gain stat="Fuel" amount="5"/>
+			</choice>
+			<choice text="Trade nothing" result="After spending some more time in the village, you and your crew continue the journey." />
+		</e>
+
+		<e id="local2" text="You find a small village. You haven't see anyone when an alien creature appears behind you. It speaks your language and greats you politely. It explains that their tradition expects gifts from far visitors.">
+			<choice text="Gift a Scanning part" result="The aliens are happy and let you stay. When you leave, they ask if they can support you in any way. You ask for fuel and they reward you five units.">
+				<gain stat="Scanning" amount="-1"/>
+				<gain stat="Fuel" amount="5"/>
+			</choice>
+			<choice text="Stay some time on the planet" result="They hesitate but let you stay in their village. When you leave later that day, you realize that your ship is missing five fuel units.">
+				<gain stat="Fuel" amount="-5"/>
+			</choice>
+			<choice text="Leave without a gift" result="The alien seems annoyed but you get to keep your parts." />
+		</e>
+
+		<e id="nothing" text="You explore you surroundings but can not find any signs of life.">			
+			<choice text="Leave" result="Well, that was a waste of time." />
 		</e>
 
  	</randomEvents>
