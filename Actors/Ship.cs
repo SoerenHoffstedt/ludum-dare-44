@@ -74,6 +74,13 @@ namespace LD44.Actors
                 stats[(int)s] = 0;
         }
 
+        const int RANGE_PER_STAT = 4;
+
+        public int GetScanningRange()
+        {
+            return RANGE_PER_STAT * GetStat(Stats.Scanning);
+        }
+
         public int GetFuelCostTo(Point targetCoord)
         {
             float dist = DistanceTo(targetCoord);
@@ -154,6 +161,7 @@ namespace LD44.Actors
             stats[(int)Stats.Fuel]      = int.Parse(statNode.Attributes["Fuel"].Value);
             stats[(int)Stats.Health]    = int.Parse(statNode.Attributes["Health"].Value);            
             stats[(int)Stats.Speed]     = int.Parse(statNode.Attributes["Speed"].Value);
+            stats[(int)Stats.Scanning]  = int.Parse(statNode.Attributes["Scanning"].Value);
 
         }
     }

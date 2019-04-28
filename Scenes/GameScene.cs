@@ -204,12 +204,39 @@ namespace LD44.Scenes
                     case PlanetType.Home:
                         break;
                 }
+            } else if(playerShip.GetStat(Stats.Fuel) == 0)
+            {
+                GameOver();
             }
+
         }
 
         public int GetFuelCost(Point target)
         {
             return playerShip.GetFuelCostTo(target);
+        }
+
+        public Point GetPlayerShipPosition()
+        {
+            return playerShip.WorldPosition;
+        }
+
+        public bool IsInPlayerScanningRange(Point worldPos)
+        {
+            int range = GetPlayerShipScanningRange() * Galaxy.TileSize.X;
+            range *= range;
+            float dist = (GetPlayerShipPosition() - worldPos).ToVector2().LengthSquared();
+            return dist <= range;
+        }
+
+        public int GetPlayerShipScanningRange()
+        {
+            return playerShip.GetScanningRange();
+        }
+
+        public void Won()
+        {
+
         }
 
         public void GameOver()

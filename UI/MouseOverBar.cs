@@ -40,15 +40,15 @@ namespace LD44.UI
         {
             base.Update(deltaTime);        
 
-            Tile t = gameScene.GetMouseOverTile();        
-
-            if(t != lastTile)
+            Tile t = gameScene.GetMouseOverTile();
+            SetTexts(t);
+            /*if (t != lastTile)
             {                                
                 SetTexts(t);
             } else if(t != null && t == lastTile)
             {
                 fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
-            }
+            }*/
             lastTile = t;
         }        
 
@@ -59,9 +59,18 @@ namespace LD44.UI
             else if (t.Type != PlanetType.Empty)
             {
                 OpenAllChildren();
-                name.SetText(t.Name);
-                type.SetValue(t.Type.ToString());
-                fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
+                if(gameScene.IsInPlayerScanningRange(t.Coord * Galaxy.TileSize) || t.Type == PlanetType.Home)
+                {
+                    name.SetText(t.Name);
+                    type.SetValue(t.Type.ToString());
+                    fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
+                } else
+                {
+                    name.SetText("???");
+                    type.SetValue("???");
+                    fuelCost.SetValue($"{gameScene.GetFuelCost(t.Coord)}");
+                }
+
             } else
             {
                 name.Close();

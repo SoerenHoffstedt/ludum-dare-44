@@ -41,6 +41,7 @@
 			<s name="iconShop"			x="0" y="96" w="16" h="16" texture="graphics" />
 			<s name="iconBattle"		x="16" y="96" w="16" h="16" texture="graphics" />
 			<s name="iconRandom"		x="32" y="96" w="16" h="16" texture="graphics" />
+			<s name="iconUnknown"		x="48" y="96" w="16" h="16" texture="graphics" />
 
 			<s name="tab" 				x="0" y="176" w="32" h="32" texture="ui_atlas"/>
 			<s name="shift" 			x="32" y="176" w="32" h="32" texture="ui_atlas"/>
@@ -56,16 +57,16 @@
 
  	<ships>
  		<s id="player0" name="Horse Ship" faction="Player" sprite="0">
- 			<stats Health="10" Speed="5" Damage="5" Defense="3" Fuel="30" />
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="2" Fuel="30" />
  		</s>
  		<s id="player1" name="Horse Ship 2" faction="Player" sprite="1">
- 			<stats Health="10" Speed="5" Damage="5" Defense="3" Fuel="30" />
+ 			<stats Health="10" Speed="5" Damage="5" Defense="3" Scanning="5" Fuel="30" />
  		</s>
  		<s id="enemy0" name="Evil Horse Ship" faction="Enemy" sprite="2">
- 			<stats Health="5" Speed="3" Damage="4" Defense="1" Fuel="30" />
+ 			<stats Health="5" Speed="3" Damage="4" Defense="1" Scanning="5" Fuel="30" />
  		</s>
  		<s id="enemy1" name="Evil Horse Ship 2" faction="Enemy" sprite="3">
- 			<stats Health="10" Speed="3" Damage="3" Defense="2" Fuel="30" />
+ 			<stats Health="10" Speed="3" Damage="3" Defense="2" Scanning="5" Fuel="30" />
  		</s>
  	</ships>
 

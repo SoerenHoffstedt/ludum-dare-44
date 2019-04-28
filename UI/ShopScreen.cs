@@ -21,7 +21,7 @@ namespace LD44.UI
         KeyValueText fuelToBuy;
         Text buyWith;
         Dictionary<Stats, Button> buttons = new Dictionary<Stats, Button>();
-        Stats[] s = { Stats.Damage, Stats.Defense, Stats.Speed };
+        Stats[] s = { Stats.Damage, Stats.Defense, Stats.Speed, Stats.Scanning };
 
         public ShopScreen(GameScene scene, Canvas canvas) : base(Texts.Get("shopScreenTitle"), canvas)
         {          
@@ -39,7 +39,7 @@ namespace LD44.UI
             
             foreach(Stats stat in s)
             {
-                Button b = new Button(stat.ToString(), new Point(150, 40));
+                Button b = new Button(stat.ToString(), new Point(120, 40));
                 Stats innerCopy = stat;
                 b.OnMouseClick = () => HandleClick(innerCopy);
                 buttonLayout.AddChild(b);

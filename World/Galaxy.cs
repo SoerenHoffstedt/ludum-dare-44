@@ -28,6 +28,7 @@ namespace LD44.World
         Sprite iconShop;
         Sprite iconBattle;
         Sprite iconRandom;
+        Sprite iconUnknown;
 
         public Galaxy(GameScene game)
         {
@@ -37,6 +38,7 @@ namespace LD44.World
             iconShop = Assets.OtherSprites["iconShop"];
             iconBattle = Assets.OtherSprites["iconBattle"];
             iconRandom = Assets.OtherSprites["iconRandom"];
+            iconUnknown = Assets.OtherSprites["iconUnknown"];
         }
 
         private void Generate()
@@ -108,7 +110,9 @@ namespace LD44.World
       
         public void Render(SpriteBatch spriteBatch, bool drawIcons)
         {
-            Sprite coveredSprite = Assets.OtherSprites["coveredTile"];
+            Point playerPos = game.GetPlayerShipPosition();
+            int playerScanningRange = game.GetPlayerShipScanningRange() * Galaxy.TileSize.X;
+            playerScanningRange *= playerScanningRange; //use squared distance.
 
 
             for (int x = 0; x < Size.X; x++)
@@ -120,20 +124,26 @@ namespace LD44.World
                     {
                         Point pos = new Point(x, y) * TileSize;
                         
-                        if (!t.IsDiscovered) 
-                            coveredSprite.Render(spriteBatch, pos);
-                        else if (t.Sprite != null)
+                        if (t.Sprite != null)
                             t.Sprite.Render(spriteBatch, pos);
 
                         if (drawIcons)
                         {
+                            float dist = (pos - playerPos).ToVector2().LengthSquared();
                             Point p2 = pos - new Point(0, 16);
-                            if (t.Type == PlanetType.RandomEvent)
-                                iconRandom.Render(spriteBatch, p2);
-                            else if (t.Type == PlanetType.EnemyBase)
-                                iconBattle.Render(spriteBatch, p2);
-                            else if (t.Type == PlanetType.Shop)
-                                iconShop.Render(spriteBatch, p2);
+
+                            if (dist <= playerScanningRange)
+                            {
+                                if (t.Type == PlanetType.RandomEvent)
+                                    iconRandom.Render(spriteBatch, p2);
+                                else if (t.Type == PlanetType.EnemyBase)
+                                    iconBattle.Render(spriteBatch, p2);
+                                else if (t.Type == PlanetType.Shop)
+                                    iconShop.Render(spriteBatch, p2);
+                            }
+                            else if(t.Type != PlanetType.Empty && t.Type != PlanetType.Home)
+                                iconUnknown.Render(spriteBatch, p2);
+                            
                         }                        
 
                         if (t == homePlanet)

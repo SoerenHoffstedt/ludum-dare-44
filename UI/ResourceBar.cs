@@ -27,8 +27,8 @@ namespace LD44.UI
         Image defenseIcon;
         Text defenseValue;
 
-        //Image scanningIcon;
-        //Text scanningValue;
+        Image scanningIcon;
+        Text scanningValue;
 
         public Button soundButton;
         public Button iconButton;
@@ -52,8 +52,8 @@ namespace LD44.UI
             defenseIcon = new Image(Assets.OtherSprites["defenseIcon"]);
             defenseValue = new Text("1234").SetTextUpdateFunction(() => playerShip.GetStat(Stats.Defense).ToString());
 
-            //scanningIcon = new Image(Assets.OtherSprites["scanningIcon"]);
-            //scanningValue = new Text("1234").SetTextUpdateFunction(() => playerShip.GetStat(Stats.Scanning).ToString());
+            scanningIcon = new Image(Assets.OtherSprites["scanningIcon"]);
+            scanningValue = new Text("1234").SetTextUpdateFunction(() => playerShip.GetStat(Stats.Scanning).ToString());
 
 
             Button menuButton = new Button(Assets.OtherSprites["menuIcon"]);
@@ -71,7 +71,7 @@ namespace LD44.UI
                 scene.ToggleIcons();                
             };
 
-            AddChild(new UIElement[] { menuButton, soundButton, iconButton, new Space(16), healthIcon, healthCount, fuelIcon, fuelCount, speedIcon, speedValue, damageIcon, damageValue, defenseIcon, defenseValue });
+            AddChild(new UIElement[] { menuButton, soundButton, iconButton, new Space(16), healthIcon, healthCount, fuelIcon, fuelCount, speedIcon, speedValue, damageIcon, damageValue, defenseIcon, defenseValue, scanningIcon, scanningValue });
 
             
         }
