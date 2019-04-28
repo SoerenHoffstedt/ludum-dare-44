@@ -11,9 +11,7 @@ using System.Xml;
 
 namespace LD44
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+  
     public class LD44Game : Game
     {
         GraphicsDeviceManager graphics;
@@ -22,16 +20,12 @@ namespace LD44
 
         public LD44Game()
         {
-            Config.LoadFromDisc("Content/config.xml");
+            
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = Config.Resolution.X;
-            graphics.PreferredBackBufferHeight = Config.Resolution.Y;
-            graphics.IsFullScreen = Config.Fullscreen;
-
-            graphics.ApplyChanges();
+            ApplyScreenChanges();
             SpriteBatchEx.GraphicsDevice = GraphicsDevice;
 
             Assets.Load(Content);
@@ -57,8 +51,8 @@ namespace LD44
 
         protected override void Initialize()
         {
-            ShowNewGame();
-            //ShowMainMenu();
+            //ShowNewGame();
+            ShowMainMenu();
             base.Initialize();
         }
 
@@ -118,5 +112,29 @@ namespace LD44
             currScene.Draw(spriteBatch);
             base.Draw(gameTime);
         }
+
+        private void ApplyScreenChanges()
+        {
+            graphics.PreferredBackBufferWidth = Config.Resolution.X;
+            graphics.PreferredBackBufferHeight = Config.Resolution.Y;
+            graphics.IsFullScreen = Config.Fullscreen;
+            graphics.ApplyChanges();
+        }
+
+        public void ChangeResolution(int x, int y)
+        {
+            Config.Resolution.X = x;
+            Config.Resolution.Y = y;
+            ApplyScreenChanges();
+            ShowMainMenu();
+        }
+
+        public void ToggleFullscreen()
+        {
+            Config.Fullscreen = !Config.Fullscreen;
+            ApplyScreenChanges();
+            ShowMainMenu();
+        }
+
     }
 }
