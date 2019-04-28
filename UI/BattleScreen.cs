@@ -21,6 +21,7 @@ namespace LD44.UI
         Ship enemyShip;
         Ship playerShip;
         GameScene scene;
+        GameStats gameStats;
 
         ShipBox playerBox;
         ShipBox enemyBox;
@@ -33,6 +34,7 @@ namespace LD44.UI
         public BattleScreen(GameScene scene, Canvas canvas) : base(Texts.Get("battleScreenTitle"), canvas)
         {
             this.scene = scene;
+            gameStats = scene.gameStats;
             playerShip = scene.GetPlayerShip();
             DeactivateCloseButton();
 
@@ -86,6 +88,7 @@ namespace LD44.UI
 
             actionText.SetText("battleStartInfo");
             UpdateTexts();
+            gameStats.BattlesFought += 1;
         }
 
         public void OpenFor(Tile target)
@@ -103,6 +106,7 @@ namespace LD44.UI
                 enemyShip = new Ship(info.enemyBlueprint, new Point(0, 0), null);
                 actionText.SetText("battleStartInfo");
                 UpdateTexts();
+                gameStats.BattlesFought += 1;
             } else
             {
                 enemyBox.UpdateText(null);
