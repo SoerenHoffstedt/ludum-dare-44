@@ -53,6 +53,8 @@
 	<string id="fleeFailed">Your attempt to flee failed. The enemy ship attacked you (no counter attack possible).</string>
 	<string id="close">Close</string>
 
+	<string id="tryAgain">Try Again</string>
+
 	<string id="goal">Reach your home planet</string>
 
 	<string id="tab">Go to Ship</string>

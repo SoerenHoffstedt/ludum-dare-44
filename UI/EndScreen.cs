@@ -46,7 +46,11 @@ namespace LD44.UI
 
             Button close = new Button("backToMenu");
             close.OnMouseClick = scene.LeaveToMenu;
-            layout.AddChild(mainText, new Space(10), planetsCount, shopCount, battleCount, randomEventCount, new Space(10), partsSold, fuelBurned, distance, new Space(10), close);
+
+            Button tryAgain = new Button("tryAgain");
+            tryAgain.OnMouseClick = scene.NewGame;
+
+            layout.AddChild(mainText, new Space(10), planetsCount, shopCount, battleCount, randomEventCount, new Space(10), partsSold, fuelBurned, distance, new Space(10), close, tryAgain);
 
             SetContentPanel(layout);
 
