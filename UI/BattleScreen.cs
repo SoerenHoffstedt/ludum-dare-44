@@ -82,9 +82,20 @@ namespace LD44.UI
             damageTakenEnemy = 0;
 
             info = (RandomBattleInfo)target.planetInfo;
-            enemyShip = new Ship(info.enemyBlueprint, new Point(0, 0));
-            actionText.SetText("battleStartInfo");
-            UpdateTexts();
+            if(info.enemyBlueprint != null)
+            {
+                enemyShip = new Ship(info.enemyBlueprint, new Point(0, 0));            
+                actionText.SetText("battleStartInfo");
+                UpdateTexts();
+            } else
+            {
+                enemyBox.UpdateText(null);
+                actionText.SetText("noBattle");
+                attackButton.ChangeText("close");
+                attackButton.OnMouseClick = Close;
+                counterButton.Close();
+                fleeButton.Close();
+            }
         }
         
         private void UpdateTexts()
@@ -111,6 +122,8 @@ namespace LD44.UI
                 actionText.SetText($"Nice, you won the battle. You gained {fuelGained} fuel units.");
                 attackButton.ChangeText("close");
                 attackButton.OnMouseClick = Close;
+                info.enemyBlueprint = null;
+                enemyShip = null;
             }
             else
             {
@@ -119,13 +132,9 @@ namespace LD44.UI
                 attackButton.ChangeText("gameOver");
                 attackButton.OnMouseClick = scene.GameOver;
             }
-
-            
-            
-            
+                                    
             counterButton.Close();
             fleeButton.Close();
-
         }
 
         void ShowOnGoing()
@@ -221,15 +230,21 @@ namespace LD44.UI
             defenseText = new KeyValueText("defense", "12");
             speedText   = new KeyValueText("speed", "12");
             AddChild(this.title, new Space(5), shipName, healthText, damageText, defenseText, speedText);
-
         }
 
         public void UpdateText(Ship ship) {
-            shipName.SetText(ship.Name);
-            healthText.SetValue(ship.GetStat(Stats.Health).ToString());
-            damageText.SetValue(ship.GetStat(Stats.Damage).ToString());
-            defenseText.SetValue(ship.GetStat(Stats.Defense).ToString());
-            speedText.SetValue(ship.GetStat(Stats.Speed).ToString());
+            if(ship == null)
+            {
+                Close();
+            } else
+            {
+                Open();
+                shipName.SetText(ship.Name);
+                healthText.SetValue(ship.GetStat(Stats.Health).ToString());
+                damageText.SetValue(ship.GetStat(Stats.Damage).ToString());
+                defenseText.SetValue(ship.GetStat(Stats.Defense).ToString());
+                speedText.SetValue(ship.GetStat(Stats.Speed).ToString());
+            }
         }
     }
 }

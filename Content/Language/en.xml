@@ -30,9 +30,9 @@
 	<string id="shopScreenTitle">Shop</string>
 	<string id="battleScreenTitle">Battle</string>
 
-	<string id="missingFuel">Not enough fuel to move here.</string>
-	
+	<string id="missingFuel">Not enough fuel to move here.</string>	
 	<string id="eventAlreadyDone">Nothing else is happening on this planet.</string>
+	<string id="noBattle">Nothing else is happening on this planet.</string>
 	
 
 	<string id="playerShip">You:</string>
