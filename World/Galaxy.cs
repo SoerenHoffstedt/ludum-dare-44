@@ -33,81 +33,19 @@ namespace LD44.World
         public Galaxy(GameScene game)
         {
             this.game = game;
-            Generate();
+
+            GalaxyGenerator generator = new GalaxyGenerator();
+            tiles = generator.Generate();
+            homePlanet = generator.HomePlanet;
+
             highlightHomeSprite = Assets.OtherSprites["homeHighlight"];
             iconShop = Assets.OtherSprites["iconShop"];
             iconBattle = Assets.OtherSprites["iconBattle"];
             iconRandom = Assets.OtherSprites["iconRandom"];
             iconUnknown = Assets.OtherSprites["iconUnknown"];
-        }
+        }        
+        
 
-        private void Generate()
-        {
-            Random random = new Random();
-
-            const int PLANET_COUNT = 26;
-
-            tiles = new Tile[Size.X, Size.Y];
-            for (int x = 0; x < Size.X; x++)
-            {
-                for (int y = 0; y < Size.Y; y++)
-                {
-                    Sprite sprite = null;
-                    if (random.NextDouble() > 0.8f)
-                        sprite = Assets.GetRandomBackgroundSprite(random);                    
-                    tiles[x, y] = new Tile(PlanetType.Empty, new Point(x, y), sprite, null, random);
-                }
-            }
-
-            var planetNames = Assets.PlanetNames;
-            Debug.Assert(planetNames.Count >= PLANET_COUNT);
-            planetNames.Shuffle(random);
-
-            Point mostFarPlanet = new Point(-1, -1);
-            for(int i = 0; i < PLANET_COUNT; ++i)
-            {
-                //TODO: better generation to distribute planets. Place random and push apart?
-                Point p = Point.Zero;
-                do
-                {
-                    p.X = random.Next(Size.X);
-                    p.Y = random.Next(Size.Y);
-                } while (Tile(p).Type != PlanetType.Empty);
-
-                if (p.X > mostFarPlanet.X)
-                    mostFarPlanet = p;
-                else if(p.X == mostFarPlanet.X)
-                {
-                    if (Math.Abs(p.Y - Size.Y / 2) < Math.Abs(mostFarPlanet.Y - Size.Y / 2))
-                        mostFarPlanet = p;
-                }
-
-                PlanetType type;
-                double rand = random.NextDouble();
-                if (rand < 0.25f)
-                    type = PlanetType.Shop;
-                else if (rand < 0.75f)
-                    type = PlanetType.RandomEvent;
-                else
-                    type = PlanetType.EnemyBase;
-
-                tiles[p.X, p.Y] = new Tile(type, p, Assets.GetRandomPlanetSprite(random), planetNames[i], random);
-            }
-
-            Tile home = Tile(mostFarPlanet);
-            home.Sprite = Assets.OtherSprites["homePlanet"];
-            home.Name = "Home";
-            home.Type = PlanetType.Home;
-            homePlanet = home;
-             
-        }
-                
-
-        public void Update(float dt)
-        {
-
-        }
-      
         public void Render(SpriteBatch spriteBatch, bool drawIcons)
         {
             Point playerPos = game.GetPlayerShipPosition();

@@ -67,6 +67,7 @@
     <Compile Include="UI\ShopScreen.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="World\Galaxy.cs" />
+    <Compile Include="World\GalaxyGenerator.cs" />
     <Compile Include="World\PlanetInfo.cs" />
     <Compile Include="World\RandomEvent.cs" />
     <Compile Include="World\Tile.cs" />
