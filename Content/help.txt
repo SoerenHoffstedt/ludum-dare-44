@@ -1,0 +1,10 @@
+- Your team is on a space ship that has gotten into trouble with a 
+  facist warmonger. You have to reach your homeplanet to be safe.
+- Your life depends on your ship. You need fuel to reach home
+  but are out of money. Trade parts of your ship for fuel.
+- The parts of your ship determine your abilities: Damage, Defense, Speed, and Scanning.
+- Damage done in battles is calculated by: Your Damage - Enemy Defense.
+  High Speed allows you to flee battles. More details on the battle screen.
+- Speed determines how fast you travel between planets.
+- The strength of your Scanning system determines how far ahead you can analyze planets.
+  For each scanning point you can see four more tiles ahead.

@@ -165,6 +165,11 @@ namespace LD44.Scenes
 
         #region Map/Actor API 
 
+        public void ShowHelp()
+        {
+            helpScreen.Open();
+        }
+
         public void MoveShipTo(Tile target)
         {
             if (playerShip.State == ShipState.Flying)
@@ -348,6 +353,7 @@ namespace LD44.Scenes
         ShopScreen shopScreen;
         RandomEventScreen randomEventScreen;
         BattleScreen battleScreen;
+        HelpScreen helpScreen;
 
         private void CreateUI()
         {
@@ -390,10 +396,12 @@ namespace LD44.Scenes
 
             battleScreen = new BattleScreen(this, canvas);
 
+            helpScreen = new HelpScreen(canvas);
+
             Style.PopStyle("planetScreens");
             Layout.PopLayout("planetScreens");
 
-            canvas.AddChild(resourceBar, mouseOverScreen, notifications, tutorialBar, shopScreen, randomEventScreen, battleScreen);
+            canvas.AddChild(resourceBar, mouseOverScreen, notifications, tutorialBar, shopScreen, randomEventScreen, battleScreen, helpScreen);
 
             canvas.FinishCreation();
         }

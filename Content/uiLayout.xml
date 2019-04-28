@@ -61,6 +61,21 @@
 		</panel>
 	</layout>
 
+	<layout id="help">
+		<panel>
+			<anchor x="Left" y="Top"/>
+			<layoutSize x="FixedSize" y="FixedSize" />			
+			<childAllign x="Left" y="Top"/>
+			<margin val="5"/>
+			<hasChildLayoutOverwrite	val="false" />
+			<childLayoutOverwrite		val="MatchParent" /> 	
+		</panel>		
+		<text>			
+			<layoutSize 				x="MatchParent" y="WrapContent" />
+			<allignment					x="Left"		y="Middle" />
+		</text>
+	</layout>
+
 	<layout id="tutorial">
 		<panel>
 			<anchor x="Right" y="Top"/>
@@ -130,50 +145,7 @@
 			<layoutSize x="FixedSize" y="WrapContent"/>
 		</text>		
 	</layout>
-
-
-
-
-	<layout id="buttonPanel">
-		<panel>
-			<anchor x="Left" y="Bottom"/>
-			<layoutSize x="WrapContent" y="WrapContent" />			
-			<childAllign x="Middle" y="Top"/> 	
-			<margin val="10"/>
-			<childLayoutOverwrite val="WrapContent" />
-		</panel>
-		<button>
-			<padding					x="8" y="8" />
-			<layoutSize 				x="FixedSize" y="FixedSize" />
-		</button>
-		<text>
-			<allignment					x="Left"		y="Top" />
-		</text>
-	</layout>	
-
-	<layout id="mouseOverPanel">
-		<panel>
-			<anchor x="Right" y="Top"/>
-			<layoutSize x="WrapContent" y="WrapContent" />			
-			<childAllign x="Left" y="Top"/> 	
-			<margin val="10"/>
-		</panel>
-		<text>			
-			<allignment					x="Left"		y="Top" />
-		</text>
-	</layout>	
-
-
-	<layout id="selectSacrificePanel">
-		<panel>
-			<anchor x="Middle" y="Top"/>
-			<layoutSize x="FixedSize" y="FixedSize" />			
-			<childAllign x="Middle" y="Middle"/> 				
-		</panel>
-		<text>			
-			<allignment x="Middle" y="Middle" />			
-		</text>
-	</layout>	
+	
 
 	<layout id="endScreen">
 		<panel>

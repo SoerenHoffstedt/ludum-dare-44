@@ -56,12 +56,13 @@ namespace LD44.UI
             scanningValue = new Text("1234").SetTextUpdateFunction(() => playerShip.GetStat(Stats.Scanning).ToString());
 
 
-            Button menuButton = new Button(Assets.OtherSprites["menuIcon"]);
-            menuButton.tooltipID = "mainMenu";
+            Button menuButton = new Button(Assets.OtherSprites["menuIcon"]);            
             menuButton.OnMouseClick = () => scene.LeaveToMenu();
 
-            soundButton = new Button(Assets.OtherSprites["soundOn"]);
-            soundButton.tooltipID = "toggleMusic";
+            Button helpButton = new Button(Assets.OtherSprites["helpIcon"]);
+            helpButton.OnMouseClick = scene.ShowHelp;
+
+            soundButton = new Button(Assets.OtherSprites["soundOn"]);            
             soundButton.OnMouseClick = () => {
                 scene.ToggleMusic();                
             };
@@ -71,7 +72,7 @@ namespace LD44.UI
                 scene.ToggleIcons();                
             };
 
-            AddChild(new UIElement[] { menuButton, soundButton, iconButton, new Space(16), healthIcon, healthCount, fuelIcon, fuelCount, speedIcon, speedValue, damageIcon, damageValue, defenseIcon, defenseValue, scanningIcon, scanningValue });
+            AddChild(new UIElement[] { menuButton, helpButton, soundButton, iconButton, new Space(16), healthIcon, healthCount, fuelIcon, fuelCount, speedIcon, speedValue, damageIcon, damageValue, defenseIcon, defenseValue, scanningIcon, scanningValue });
 
             
         }

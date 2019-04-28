@@ -57,6 +57,7 @@
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="Scenes\MainMenu.cs" />
     <Compile Include="UI\BattleScreen.cs" />
+    <Compile Include="UI\HelpScreen.cs" />
     <Compile Include="UI\TutorialBar.cs" />
     <Compile Include="UI\MouseOverBar.cs" />
     <Compile Include="UI\NotificationBar.cs" />

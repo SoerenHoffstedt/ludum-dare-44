@@ -62,5 +62,9 @@ planet (right)</string>
 	<string id="rmouse">Move Camera</string>
 	<string id="lmouse">Move</string>
 
-</language>
 
+	<string id="helpScreenTitle">Let's explain some things</string>
+	
+
+
+</language>

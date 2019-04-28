@@ -32,11 +32,12 @@
 			<s name="scanningIcon" 		x="128" y="144" w="32" h="32" texture="ui_atlas"/>
 			<s name="healthIcon" 		x="160" y="144" w="32" h="32" texture="ui_atlas"/>
 
+			<s name="soundOn" 			x="192" y="0" w="32" h="32" texture="ui_atlas"/>
 			<s name="menuIcon" 			x="192" y="32" w="32" h="32" texture="ui_atlas"/>
+			<s name="helpIcon" 			x="192" y="64" w="32" h="32" texture="ui_atlas"/>
+			<s name="soundOff" 			x="224" y="0" w="32" h="32" texture="ui_atlas"/>
 			<s name="iconToggleOn"		x="224" y="32" w="32" h="32" texture="ui_atlas"/>
 			<s name="iconToggleOff"		x="224" y="64" w="32" h="32" texture="ui_atlas"/>
-			<s name="soundOn" 			x="192" y="0" w="32" h="32" texture="ui_atlas"/>
-			<s name="soundOff" 			x="224" y="0" w="32" h="32" texture="ui_atlas"/>
 
 			<s name="iconShop"			x="0" y="96" w="16" h="16" texture="graphics" />
 			<s name="iconBattle"		x="16" y="96" w="16" h="16" texture="graphics" />
