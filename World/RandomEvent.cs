@@ -22,8 +22,7 @@ namespace LD44.World
         {
             Id = node.Attributes["id"].Value;
             Text = node.Attributes["text"].Value;
-            Choices = int.Parse(node.Attributes["choices"].Value);
-
+            
             var choiceList = node.SelectNodes("choice");
             AllChoices = new Choice[choiceList.Count];
             if (choiceList.Count > 4)
@@ -33,6 +32,8 @@ namespace LD44.World
             {
                 AllChoices[i] = new Choice(choiceList[i]);
             }
+
+            Choices = AllChoices.Length;
 
         }
 
