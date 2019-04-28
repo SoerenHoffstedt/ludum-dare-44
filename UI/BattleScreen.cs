@@ -178,7 +178,8 @@ namespace LD44.UI
         void Attack()
         {
             Attacking(playerShip, enemyShip);
-            Attacking(enemyShip, playerShip);
+            if(enemyShip.GetStat(Stats.Health) > 0)
+                Attacking(enemyShip, playerShip);
             UpdateTexts();
         }
 
@@ -187,7 +188,8 @@ namespace LD44.UI
         void Counter()
         {
             Attacking(enemyShip, playerShip);
-            Attacking(playerShip, enemyShip, COUNTER_BONUS);
+            if (playerShip.GetStat(Stats.Health) > 0)
+                Attacking(playerShip, enemyShip, COUNTER_BONUS);
             UpdateTexts();
         }
 
