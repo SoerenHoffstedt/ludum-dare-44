@@ -33,45 +33,11 @@ namespace LD44.World
                     tiles[x, y] = new Tile(PlanetType.Empty, new Point(x, y), sprite, null, random);
                     planets[x, y] = PlanetType.Empty;
                 }
-            }
-
-            var planetNames = Assets.PlanetNames;
-            Debug.Assert(planetNames.Count >= PLANET_COUNT);
-            planetNames.Shuffle(random);
+            }            
 
             List<Point> placementPoints = GetPlanetPositions();
 
-            Point mostFarPlanet = new Point(-1, -1);
-            for (int i = 0; i < placementPoints.Count; ++i)
-            {
-                Point p = placementPoints[i];
-
-                if (p.X > mostFarPlanet.X)
-                    mostFarPlanet = p;
-                else if (p.X == mostFarPlanet.X)
-                {
-                    if (Math.Abs(p.Y - Size.Y / 2) < Math.Abs(mostFarPlanet.Y - Size.Y / 2))
-                        mostFarPlanet = p;
-                }
-
-                PlanetType type;
-                double rand = random.NextDouble();
-                if (rand < 0.25f)
-                    type = PlanetType.Shop;
-                else if (rand < 0.75f)
-                    type = PlanetType.RandomEvent;
-                else
-                    type = PlanetType.EnemyBase;
-
-                tiles[p.X, p.Y] = new Tile(type, p, Assets.GetRandomPlanetSprite(random), planetNames[i], random);
-                planets[p.X, p.Y] = type;
-            }
-
-            Tile home = Tile(mostFarPlanet);
-            home.Sprite = Assets.OtherSprites["homePlanet"];
-            home.Name = "Home";
-            home.Type = PlanetType.Home;
-            HomePlanet = home;
+            GenerateTypes(planets, placementPoints);            
 
             return tiles;
         }
@@ -79,6 +45,69 @@ namespace LD44.World
         public Tile Tile(Point p)
         {
             return tiles[p.X, p.Y];
+        }
+
+        const float PERC_SHOP = 0.25f;
+        const float PERC_RAND = 0.4f;
+        const float PERC_BATT = 0.35f;
+
+        const int MAX_DIST_BETWEEN_SHOPS = 15;
+
+        void GenerateTypes(PlanetType[,] planets, List<Point> placementPoints)
+        {
+            var planetNames = Assets.PlanetNames;
+            Debug.Assert(planetNames.Count >= placementPoints.Count);
+            planetNames.Shuffle(random);
+
+            int numShop     = (int)(placementPoints.Count * PERC_SHOP);
+            int numBattle   = (int)(placementPoints.Count * PERC_BATT);
+            int numRandom   = placementPoints.Count - numShop - numBattle;
+
+            for (int i = 0; i < placementPoints.Count; ++i)
+            {
+                Point p = placementPoints[i];
+                PlanetType type;
+
+                /*double rand = random.NextDouble();
+                if (rand < 0.25f)
+                    type = PlanetType.Shop;
+                else if (rand < 0.75f)
+                    type = PlanetType.RandomEvent;
+                else
+                    type = PlanetType.EnemyBase;
+                */
+
+                if (i < numShop)
+                    type = PlanetType.Shop;
+                else if (i < numShop + numBattle)
+                    type = PlanetType.EnemyBase;
+                else
+                    type = PlanetType.RandomEvent;
+
+                tiles[p.X, p.Y] = new Tile(type, p, Assets.GetRandomPlanetSprite(random), planetNames[i], random);
+                planets[p.X, p.Y] = type;
+            }
+
+
+            //get home planet:
+            Point mostFarPlanet = new Point(-1, -1);
+            for (int i = 0; i < placementPoints.Count; ++i)
+            {
+                Point p = placementPoints[i];
+                if (p.X > mostFarPlanet.X)
+                    mostFarPlanet = p;
+                else if (p.X == mostFarPlanet.X)
+                {
+                    if (Math.Abs(p.Y - Size.Y / 2) < Math.Abs(mostFarPlanet.Y - Size.Y / 2))
+                        mostFarPlanet = p;
+                }                
+            }
+
+            Tile home = Tile(mostFarPlanet);
+            home.Sprite = Assets.OtherSprites["homePlanet"];
+            home.Name = "Home";
+            home.Type = PlanetType.Home;
+            HomePlanet = home;
         }
 
 
