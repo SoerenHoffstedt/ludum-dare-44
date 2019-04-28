@@ -160,11 +160,12 @@ namespace LD44.Scenes
                 ToggleMusic();
             }
 
+            #if DEBUG
             if (Input.GetKeyDown(Keys.F10))
             {
                 playerShip.ChangeStat(Stats.Fuel, 20);
             }
-
+            
             if (Input.GetKeyDown(Keys.F11))
             {
                 hideUI = !hideUI;
@@ -174,7 +175,7 @@ namespace LD44.Scenes
             {
                 Canvas.DRAW_DEBUG = !Canvas.DRAW_DEBUG;
             }
-
+            #endif
         }
                   
         protected override void HandleCameraInput(double deltaTime)
@@ -360,6 +361,11 @@ namespace LD44.Scenes
         public void LeaveToMenu()
         {
             ((LD44Game)game).ShowMainMenu();
+        }
+
+        public void NewGame()
+        {
+            ((LD44Game)game).ShowNewGame();
         }
 
         bool showIcons = true;

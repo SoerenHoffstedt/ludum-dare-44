@@ -12,7 +12,7 @@ namespace LD44.World
 {
     public class GalaxyGenerator
     {
-        const int PLANET_COUNT = 26;
+        const int PLANET_COUNT = 28;
         Tile[,] tiles;
         public Tile HomePlanet;
         Point Size = Galaxy.Size;
@@ -47,9 +47,9 @@ namespace LD44.World
             return tiles[p.X, p.Y];
         }
 
-        const float PERC_SHOP = 0.25f;
-        const float PERC_RAND = 0.4f;
-        const float PERC_BATT = 0.35f;
+        const float PERC_SHOP = 0.30f;
+        const float PERC_RAND = 0.50f;
+        const float PERC_BATT = 0.20f;
 
         const int MAX_DIST_BETWEEN_SHOPS = 15;
 
@@ -66,16 +66,7 @@ namespace LD44.World
             for (int i = 0; i < placementPoints.Count; ++i)
             {
                 Point p = placementPoints[i];
-                PlanetType type;
-
-                /*double rand = random.NextDouble();
-                if (rand < 0.25f)
-                    type = PlanetType.Shop;
-                else if (rand < 0.75f)
-                    type = PlanetType.RandomEvent;
-                else
-                    type = PlanetType.EnemyBase;
-                */
+                PlanetType type;             
 
                 if (i < numShop)
                     type = PlanetType.Shop;

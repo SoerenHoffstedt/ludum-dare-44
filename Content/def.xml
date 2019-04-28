@@ -78,7 +78,10 @@
  			<stats Health="6" Speed="2" Damage="4" Defense="2" Scanning="5" Fuel="300" />
  		</s>
  		<s id="enemy2" name="Evil Horse Ship 3" faction="Enemy" sprite="4">
- 			<stats Health="6" Speed="2" Damage="4" Defense="2" Scanning="5" Fuel="300" />
+ 			<stats Health="4" Speed="2" Damage="6" Defense="0" Scanning="5" Fuel="300" />
+ 		</s>
+ 		<s id="enemy3" name="Evil Horse Ship 3" faction="Enemy" sprite="5">
+ 			<stats Health="6" Speed="2" Damage="6" Defense="2" Scanning="5" Fuel="300" />
  		</s>
  	</ships>
 

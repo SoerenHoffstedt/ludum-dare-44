@@ -20,5 +20,7 @@
 	
 	<s id="attack" 	file="attack"/>
 	<s id="money" 	file="money"/>
+	<s id="gameWon" file="money"/>
+	<s id="gameLost" file="error"/>
 
 </sounds>

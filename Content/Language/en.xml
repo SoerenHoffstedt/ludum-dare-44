@@ -47,13 +47,14 @@
 	<string id="counter">Counter</string>
 	<string id="flee">Flee</string>
 	
-	<string id="battleStartInfo">You are battleing a hostile ship. After you attack, the enemy will attack. Countering will let the opponent attack first, giving you the chance for a strong counter attack (+2 damage). The damage given is your Attack minus the enemies Defense. The base chance of fleeing is 25%. Each speed point increases your chance of fleeing by 10% chance. Winning a battle rewards you fuel.</string>
+	<string id="battleStartInfo">You are battling a hostile ship. After you attack, the enemy will attack. Countering will let the opponent attack first, giving you the chance for a strong counter attack (+2 damage). The damage given is your Attack minus the enemies Defense. The base chance of fleeing is 25%. Each speed point increases your chance of fleeing by 10% chance. Winning a battle rewards you fuel.</string>
 
 	<string id="fleeSuccessful">Your attempt to flee was successful. You gained no resources.</string>
 	<string id="fleeFailed">Your attempt to flee failed. The enemy ship attacked you (no counter attack possible).</string>
 	<string id="close">Close</string>
 
 	<string id="tryAgain">Try Again</string>
+	<string id="giveUp">Give Up</string>
 
 	<string id="goal">Reach your home planet</string>
 
@@ -68,11 +69,11 @@
 	<string id="helpScreenTitle">Let's explain some things</string>	
 
 	<string id="endSuccessTitle">You won the game</string>
-	<string id="endSuccessText">You successfully made it home. Your crew is happy and your partner awaits you when arriving in your home port.</string>
+	<string id="endSuccessText">You successfully made it home. The crew is happy and makes plans for distributing the rescued dogs. Your partner awaits you when arriving at your home port. As you see them, your tension finally eases up.</string>
 	<string id="endFailTitle">You lost the game</string>
 	<string id="endFailText">You and your crew did not make it home.</string>
-	<string id="endFailTextFuel">You ran out of fuel.</string>
-	<string id="endFailTextBattle">Your ship was destroyed in a battle wit the RPI. No one survived.</string>
+	<string id="endFailTextFuel">You ran out of fuel and are stranded in space. You make a distress call. If no one reacts, you are left to the DCA to attack you. The crew spends the time that is left with the rescued dogs.</string>
+	<string id="endFailTextBattle">Your ship was destroyed in a battle with the RPI. No one survived.</string>
 
 	<string id="planetCount">Planets Visited</string>
 	<string id="shopCount">Shops Visited</string>

@@ -32,7 +32,7 @@ namespace LD44.UI
             VerticalLayout layout = new VerticalLayout();
             Size = new Point(600, 600);
 
-            mainText = new Text("asdasdadasdasdasdadasdasdasdadasdasda\nasd\nasd\n");
+            mainText = new Text("asdasdadasdasdasdadasdasdasdadasdasdaasd\nasdasd\n\nasd\nasd\n");
             mainText.wrapText = true;
 
             planetsCount    = new KeyValueText("planetCount", "1234");

@@ -55,8 +55,8 @@ namespace LD44.World
 
     public class ShopInfo : PlanetInfo
     {
-        private const int FUEL_BASE = 15;
-        private const int FUEL_OFFSET = 10;
+        private const int FUEL_BASE = 10;
+        private const int FUEL_OFFSET = 8;
 
         public int FuelToBuy;
 

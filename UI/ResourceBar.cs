@@ -72,7 +72,10 @@ namespace LD44.UI
                 scene.ToggleIcons();                
             };
 
-            AddChild(new UIElement[] { menuButton, helpButton, soundButton, iconButton, new Space(16), healthIcon, healthCount, fuelIcon, fuelCount, speedIcon, speedValue, damageIcon, damageValue, defenseIcon, defenseValue, scanningIcon, scanningValue });
+            Button giveUp = new Button("giveUp");
+            giveUp.OnMouseClick = () => scene.GameOver(false);
+
+            AddChild(new UIElement[] { menuButton, helpButton, soundButton, iconButton, new Space(16), healthIcon, healthCount, fuelIcon, fuelCount, speedIcon, speedValue, damageIcon, damageValue, defenseIcon, defenseValue, scanningIcon, scanningValue, giveUp });
 
             
         }
